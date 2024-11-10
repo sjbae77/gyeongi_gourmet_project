@@ -1,17 +1,6 @@
 <template>
-  <div class="container">
+  
     <!-- <h1>{{ msg }}</h1> -->
-      <header class="header">
-        <h1>모범 음식점 소개 사이트</h1>
-        <nav class="nav">
-          <ul class="menu-wrap">
-            <li class="active">메인화면</li>
-            <li>음식점 목록</li>
-            <li>지도</li>
-            <li>로그인</li>
-          </ul>
-        </nav>
-      </header>
       <div class="content-wrap">
         <div class="content">
           <div class="img-wrap">
@@ -35,10 +24,6 @@
         </section>
         </div>
       </div>
-      <footer class="footer">
-        <p>(주) 수정 컴퍼니</p>
-      </footer>
-  </div>
 </template>
 
 <script>
@@ -51,34 +36,6 @@ export default {
 </script>
 
 <style lang="scss">
-.container {
-  width: 100%;
-  height: 100%;
-}
-
-.header { 
-  width: 100%;
-  height: 100px;
-  display: flex;
-  align-content: center;
-  justify-content: space-around;
-  line-height: 100px;
-  background-color: aliceblue; 
-
-  h1 {
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  ul {
-    display: flex;
-    gap: 20px;
-
-    li.active {
-      font-weight: bold;
-    }
-  }
-}
 .content-wrap {
   width: 100%;
   height: calc(100% - 300px);
@@ -107,10 +64,5 @@ export default {
       }
     }
   }
-}
-.footer {
-  width: 100%;
-  height: 200px;
-  background-color: bisque;
 }
 </style>
