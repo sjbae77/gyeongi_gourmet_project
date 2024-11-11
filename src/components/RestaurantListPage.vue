@@ -1,8 +1,17 @@
 <template>
-  <div class="container">
-    <h1>음식점 리스트 페이지</h1>
-    <div>
-      {{ lacationArr[0] }}
+  <div class="page-cont">
+    <!-- <h1>음식점 리스트 페이지</h1> -->
+    <!-- <div class="location-wrap">
+      <div class="location" v-for="(item, idx) in lacationArr" :key="idx">
+        <span>{{ item[0].sigunNM }}</span>
+      </div>
+    </div> -->
+    <div class="cont" v-for="(totalItem, idx) in lacationArr" :key="idx">
+      <span class="title">{{ totalItem[0].sigunNM }}</span>
+      <div v-for="(item, i) in totalItem" :key="i">
+        <!-- <div>{{ item }}</div> -->
+        <div>{{ item.biszestblNM }} - # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,18 +38,21 @@ export default {
         const xmlData = response.data;
         let jsonData = this.parseXML(xmlData);
         // console.log("xmlData", xmlData);
-        console.log(jsonData); // JSON 데이터 출력
+        // console.log(jsonData); // JSON 데이터 출력
         
         // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
         jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
 
         // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
         const sigunNMArr = [...new Set(jsonData.map(item => item.sigunNM))];
+        console.log(sigunNMArr)
 
         // 지역별로 필터링하여 새로운 배열 생성
         sigunNMArr.forEach(sigunItem => {
           this.lacationArr.push(jsonData.filter(item => item.sigunNM == sigunItem));
         })
+
+        console.log(this.lacationArr)
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -75,5 +87,44 @@ export default {
 </script>
 
 <style lang="scss">
+.page-cont {
+  width: 100%;
+  height: calc(100% - 300px);
+  overflow-y: scroll;
+}
+.cont{
+  padding: 15px 15px 30px;
+  border-bottom: 1px solid #ddd;
+
+  .title {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}
+// .location-wrap {
+//   display: flex;
+//   flex-wrap: wrap;
+//   width: 100%;
+//   height: 100%;
+//   gap: 10px; /* 박스 간의 간격을 10px로 설정 */
+//   box-sizing: border-box;
+//   padding: 10px; /* 가장자리 간격을 위한 패딩 */
+
+//   .location {
+//     position: relative;
+//     flex: 1 0 calc(20% - 10px); /* 간격을 고려하여 너비를 조정 */
+//     height: calc(20% - 10px);   /* 높이도 동일하게 간격을 조정 */
+//     box-sizing: border-box;
+//     border: 1px solid #ddd; /* 박스 구분을 위한 테두리 */
+
+//     span {
+//       position: absolute;
+//       top: 50%;
+//       left: 50%;
+//       transform: translate(-50%, -50%);
+//     }
+//   }
+// }
 
 </style>
