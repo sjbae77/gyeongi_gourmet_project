@@ -1,16 +1,19 @@
 <template>
-  <div class="page-cont">
-    <!-- <h1>음식점 리스트 페이지</h1> -->
-    <!-- <div class="location-wrap">
-      <div class="location" v-for="(item, idx) in lacationArr" :key="idx">
-        <span>{{ item[0].sigunNM }}</span>
-      </div>
-    </div> -->
+  <div class="search-wrap">
+    <div class="search-box">
+      <i class="material-icons">search</i>
+      <input type="text" class="search-input" placeholder="검색어를 입력해주세요">
+      <button class="search-button">검색</button>
+    </div>
+  </div>
+  <div class="cont-wrap">
     <div class="cont" v-for="(totalItem, idx) in lacationArr" :key="idx">
       <span class="title">{{ totalItem[0].sigunNM }}</span>
-      <div v-for="(item, i) in totalItem" :key="i">
-        <!-- <div>{{ item }}</div> -->
-        <div>{{ item.biszestblNM }} - # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</div>
+      <div class="item-wrap">
+        <div v-for="(item, i) in totalItem" :key="i"  class="item">
+          <span class="name">{{ item.biszestblNM }}</span>
+          <span class="tag">- # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -87,44 +90,111 @@ export default {
 </script>
 
 <style lang="scss">
-.page-cont {
+/* 검색창 스타일 */
+.search-wrap {
   width: 100%;
-  height: calc(100% - 300px);
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+}
+.search-box {
+  display: flex;
+  align-items: center;
+  width: 500px;
+  padding: 10px;
+  border: 1px solid #dfe1e5;
+  border-radius: 24px;
+  background-color: #fff;
+  box-shadow: 0px 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+/* 돋보기 아이콘 */
+.search-box i {
+  font-size: 20px;
+  color: #5f6368;
+  margin-right: 10px;
+}
+
+/* 입력 필드 스타일 */
+.search-input {
+  flex: 1;
+  padding: 8px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+/* 입력 필드 포커스 시 스타일 */
+.search-input:focus {
+  outline: none;
+}
+
+/* 검색 버튼 스타일 */
+.search-button {
+  background-color: #f8f9fa;
+  border: none;
+  padding: 8px 16px;
+  margin-left: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  color: #5f6368;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* 버튼 호버 효과 */
+.search-button:hover {
+  background-color: #e8e8e8;
+}
+
+.cont-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 30px 0;
+  gap: 30px;
+  width: 100%;
+  height: calc(100% - 160px);
   overflow-y: scroll;
 }
+
 .cont{
+  width: 95%;
   padding: 15px 15px 30px;
+  // border-radius: 10px;
+  // box-shadow: 0 0 10px 7px #ddd;
+  background-color: #fff;
   border-bottom: 1px solid #ddd;
 
+  &:last-child {
+    border: none;
+  }
+  
   .title {
     display: block;
+    margin-bottom: 35px;
+    font-size: 30px;
     font-weight: bold;
-    margin-bottom: 10px;
+  }
+
+  .item-wrap {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .item {
+    width: 50%;
+    margin-bottom: 20px;
+    font-size: 18px;
+
+    .name {
+      font-weight: bold;
+    }
+
+    .tag {
+      margin-left: 10px;
+      font-size: 15px;
+    }
   }
 }
-// .location-wrap {
-//   display: flex;
-//   flex-wrap: wrap;
-//   width: 100%;
-//   height: 100%;
-//   gap: 10px; /* 박스 간의 간격을 10px로 설정 */
-//   box-sizing: border-box;
-//   padding: 10px; /* 가장자리 간격을 위한 패딩 */
-
-//   .location {
-//     position: relative;
-//     flex: 1 0 calc(20% - 10px); /* 간격을 고려하여 너비를 조정 */
-//     height: calc(20% - 10px);   /* 높이도 동일하게 간격을 조정 */
-//     box-sizing: border-box;
-//     border: 1px solid #ddd; /* 박스 구분을 위한 테두리 */
-
-//     span {
-//       position: absolute;
-//       top: 50%;
-//       left: 50%;
-//       transform: translate(-50%, -50%);
-//     }
-//   }
-// }
-
 </style>
