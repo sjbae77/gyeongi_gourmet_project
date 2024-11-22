@@ -24,9 +24,33 @@ import { signUpEmail } from "../firebase/index.js";
         console.log('Email : ' + this.email);
         console.log('Password : ' + this.password);
 
+        if (this.email == "") {
+          alert("이메일을 입력해주세요.");
+          return;
+        }
+
+        if (this.password == "") {
+          alert("패스워드를 입력해주세요.");
+          return;
+        }
+
         signUpEmail(this.email, this.password).then((result) => {
-          console.log('sign up');
-          console.log(result);
+          this.$router.replace('/');
+          alert("회원가입 완료되었습니다.\r\n" + result.user.email);
+        })
+        .catch((err) => {
+          switch(err.code) {
+            case "auth/invalid-email":
+              alert("잘못된 이메일 형식입니다.");
+              break;
+            case "auth/email-already-in-use":
+              alert("이미 사용중인 이메일입니다.");
+              break;
+            default:
+              console.log(err);
+              break;
+          }
+
         });
       }
     }

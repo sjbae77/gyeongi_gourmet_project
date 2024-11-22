@@ -24,9 +24,38 @@ export default {
         console.log('Email : ' + this.email);
         console.log('Password : ' + this.password);
 
+        if (this.email == "") {
+          alert("이메일을 입력해주세요.");
+          return;
+        }
+
+        if (this.password == "") {
+          alert("패스워드를 입력해주세요.");
+          return;
+        }
+
         loginEmail(this.email, this.password).then((result) => {
-          console.log('sign up');
-          console.log(result);
+          this.$router.replace('/');
+          alert("로그인 완료되었습니다.\r\n" + result.user.email);
+        })
+        .catch((err) => {
+          switch(err.code) {
+            case "auth/invalid-email":
+              alert("잘못된 이메일 형식입니다");
+              break;
+            case "auth/wrong-password":
+              alert("비밀번호가 틀립니다.");
+              break;
+            case "auth/user-not-found":
+              alert("등록되지 않은 이메일입니다.");
+              break;
+              case "auth/invalid-credential":
+              alert("등록되지 않은 이메일 이거나 비밀번호가 틀립니다.");
+              break;
+            default:
+              console.log(err);
+              break;
+          }
         });
     }
   }
