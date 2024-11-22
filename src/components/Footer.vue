@@ -1,6 +1,9 @@
 <template>
   <footer class="footer">
-    <p>(주) 수정 컴퍼니</p>
+    <p>
+      본 페이지는 상업적 목적이 아닌 한양사이버대학교 졸업프로젝트를 목적으로 만들어졌습니다.<br />
+      2023100000 배수정
+    </p>
   </footer>
 </template>
 
@@ -19,7 +22,12 @@ export default {
   left: 0;
   width: 100%;
   height: 200px;
-  background-color: #f2f2f2;
-  border-top: 2px solid #ddd;
+  background-color: #1E3049;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 25px;
+  font-size: 16px;
 }
 </style>

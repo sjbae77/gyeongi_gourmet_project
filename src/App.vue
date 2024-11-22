@@ -1,15 +1,17 @@
 <template>
   <div class="container">
-    <HeaderLayout />
-    <!-- <MainPage />
-    <RestaurantList />
-    <Location /> -->
-    <!-- <Login /> -->
-    <!-- 변경될 페이지 보여질 공간 -->
-    <div class="content-layout">
-      <router-view />
+    <div class="inner">
+      <HeaderLayout />
+      <!-- <MainPage />
+      <RestaurantList />
+      <Location /> -->
+      <!-- <Login /> -->
+      <!-- 변경될 페이지 보여질 공간 -->
+      <div class="content-layout">
+        <router-view />
+      </div>
+      <FooterLayout />
     </div>
-    <FooterLayout />
   </div>
   <!-- <Main msg ="hello" /> -->
 </template>
@@ -35,6 +37,23 @@ export default {
 
 <style lang="scss">
 @import './css/reset.css';
+body {
+	font-family: 'Noto Sans KR', sans-serif;
+  color: #1E3049;
+}
+
+.color-green {
+  color: #2E9A47;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+a {
+  text-decoration: none;
+  outline: none;
+  color: #666;
+}
+
 #app {
   width: 100%;
   height: 100%;
@@ -43,10 +62,13 @@ export default {
   width: 100%;
   height: 100%;
 }
+.inner {
+  padding: 0 140px;
+}
 .content-layout {
   width: 100%;
-  height: calc(100% - 300px);
-  padding-top: 100px;
+  height: calc(100% - 340px);
+  padding: 140px 0 340px;
 }
 
 /* 스크롤바 전체 */

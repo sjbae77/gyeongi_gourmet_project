@@ -1,19 +1,32 @@
 <template>
   <div class="search-wrap">
+    <span class="title color-green">음식점 목록</span>
     <div class="search-box">
       <i class="material-icons">search</i>
       <input type="text" class="search-input" placeholder="검색어를 입력해주세요">
       <button class="search-button">검색</button>
     </div>
   </div>
-  <div class="cont-wrap">
-    <div class="cont" v-for="(totalItem, idx) in lacationArr" :key="idx">
-      <span class="title">{{ totalItem[0].sigunNM }}</span>
-      <div class="item-wrap">
-        <div v-for="(item, i) in totalItem" :key="i"  class="item">
-          <span class="name">{{ item.biszestblNM }}</span>
-          <span class="tag">- # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</span>
+  <div class="list-container">
+    <div class="category-wrap">
+      <div class="title-wrap">
+        <span class="title color-green">지역</span>
+      </div>
+    </div>
+    <div class="cont-wrap">
+      <div class="title-wrap">
+        <span class="title color-green">검색 결과</span>
+        <span class="title color-green">총 3건</span>
+      </div>
+      <div class="cont" v-for="(totalItem, idx) in lacationArr" :key="idx">
+        <span class="title">{{ totalItem[0].sigunNM }}</span>
+        <div class="item-wrap">
+          <div v-for="(item, i) in totalItem" :key="i"  class="item">
+            <span class="name">{{ item.biszestblNM }}</span>
+            <span class="tag">- # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</span>
+          </div>
         </div>
+        <button>자세히 보기</button>
       </div>
     </div>
   </div>
@@ -93,19 +106,22 @@ export default {
 /* 검색창 스타일 */
 .search-wrap {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
+  margin-top: 80px;
+
+  .title {
+    font-size: 38px;
+  }
 }
 .search-box {
   display: flex;
   align-items: center;
-  width: 500px;
+  width: 100%;
+  margin-top: 30px;
   padding: 10px;
-  border: 1px solid #dfe1e5;
+  border: 3px solid #2E9A47;
   border-radius: 24px;
   background-color: #fff;
-  box-shadow: 0px 1px 6px rgba(32, 33, 36, 0.28);
+  box-shadow: 0px 4px 4px rgba(#000, 0.25);
 }
 
 /* 돋보기 아이콘 */
@@ -147,29 +163,46 @@ export default {
   background-color: #e8e8e8;
 }
 
+.list-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+
+  .category-wrap {
+    width: 20%;
+  }
+  .cont-wrap {
+    width: 75%;
+  }
+
+  .title-wrap {
+    width: 100%;
+    border-bottom: 1px solid #000;
+    padding: 15px;
+  }
+}
+
 .cont-wrap {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 30px 0;
   gap: 30px;
-  width: 100%;
-  height: calc(100% - 160px);
   overflow-y: scroll;
+
+  .title-wrap {
+    width:100%;
+    display: flex; 
+    justify-content: space-between;
+  }
 }
 
 .cont{
   width: 95%;
-  padding: 15px 15px 30px;
-  // border-radius: 10px;
-  // box-shadow: 0 0 10px 7px #ddd;
+  padding: 35px 30px;
+  border-radius: 15px;
   background-color: #fff;
-  border-bottom: 1px solid #ddd;
+  border: 1px solid #2E9A47;
 
-  &:last-child {
-    border: none;
-  }
-  
   .title {
     display: block;
     margin-bottom: 35px;
@@ -195,6 +228,18 @@ export default {
       margin-left: 10px;
       font-size: 15px;
     }
+  }
+
+  button {
+    width: 100%;
+    background-color: #2E9A47;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 18px 0;
+    margin: 0 auto;
+    border: none;
   }
 }
 </style>
