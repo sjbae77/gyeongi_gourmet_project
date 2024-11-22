@@ -1,40 +1,40 @@
 <template>
-  <div class="login">
-    <p>로그인</p>
+  <div class="sign-up">
+    <p>회원가입</p>
     <input type="text" v-model="email" placeholder="email"><br>
     <input type="password" v-model="password" placeholder="password"><br>
-    <button v-on:click="login">로그인</button>
-    <button><router-link to="/SignUp">회원가입</router-link></button>
+    <button><router-link to="/Login">로그인</router-link></button>
+    <button v-on:click="signUp">가입하기</button>
   </div>
 </template>
 
 <script>
-import { loginEmail } from "../firebase/index.js";
+import { signUpEmail } from "../firebase/index.js";
 
-export default {
-  name: 'LoginPage',
-  data() {
-    return {
-      email: '',
-      password: '',
-    }
-  },
-  methods: {
-    login() {
+  export default {
+    name: 'SignUpPage',
+    data() {
+      return {
+        email: '',
+        password: '',
+      }
+    },
+    methods: {
+      signUp() {
         console.log('Email : ' + this.email);
         console.log('Password : ' + this.password);
 
-        loginEmail(this.email, this.password).then((result) => {
+        signUpEmail(this.email, this.password).then((result) => {
           console.log('sign up');
           console.log(result);
         });
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-  .login {
+  .signUp {
     margin-top: 40px;
   }
   input {
@@ -51,8 +51,9 @@ export default {
     margin-top: 40px;
     font-size: 20px;
   }
-  p a {
-    text-decoration: underline;
-    cursor: pointer;
+  span {
+    display: block;
+    margin-top: 20px;
+    font-size: 15px;
   }
 </style>
