@@ -22,13 +22,17 @@ export default {
 
 <style lang="scss">
 .header { 
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100px;
   display: flex;
   align-content: center;
   justify-content: space-around;
   line-height: 100px;
-  background-color: aliceblue; 
+  background-color: #f2f2f2;
+  border-bottom: 2px solid #ddd;
 
   h1 {
     font-size: 30px;

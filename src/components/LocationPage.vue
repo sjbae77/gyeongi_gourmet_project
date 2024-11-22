@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="pageCont">
     <h1>지도 페이지</h1>
   </div>
 </template>
