@@ -79,20 +79,6 @@ export default {
   }
 }
 
-.img-wrap {
-  margin-top: 127px;
-  width: 397px;
-  height: 428px;
-  flex: 0 0 397px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 35px;
-    box-shadow: 0 -5px 20px rgba(#000, 0.2);
-  }
-}
-
 section {
   display: flex;
   align-items: flex-end;
@@ -106,6 +92,22 @@ section {
     em {
       display: block;
       font-size: 38px;
+    }
+  }
+}
+
+.sec1 {
+  .img-wrap {
+    margin-top: 127px;
+    width: 397px;
+    height: 428px;
+    flex: 0 0 397px;
+  
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 35px;
+      box-shadow: 0 -5px 20px rgba(#000, 0.2);
     }
   }
 }

@@ -2,9 +2,8 @@
   <div class="search-wrap">
     <span class="title color-green">음식점 목록</span>
     <div class="search-box">
-      <i class="material-icons">search</i>
       <input type="text" class="search-input" placeholder="검색어를 입력해주세요">
-      <button class="search-button">검색</button>
+      <button class="search-button"></button>
     </div>
   </div>
   <div class="list-container">
@@ -12,13 +11,48 @@
       <div class="title-wrap">
         <span class="title color-green">지역</span>
       </div>
+      <div class="sigun-wrap">
+        <div class="sec">
+          <span>전체</span>
+        </div>
+        <div class="sec">
+          <span>경기</span>
+          <ul v-for="(item, idx) in sigunNMArr" :key="idx">
+            <li>{{ item }}</li>
+          </ul>
+        </div>
+      </div>
     </div>
     <div class="cont-wrap">
       <div class="title-wrap">
         <span class="title color-green">검색 결과</span>
-        <span class="title color-green">총 3건</span>
+        <span class="title color-green">총 {{ totalLocationLength }}건</span>
       </div>
-      <div class="cont" v-for="(totalItem, idx) in lacationArr" :key="idx">
+
+      <div class="cont" v-for="(item, idx) in totalLocationArr" :key="idx">
+        <div class="info-cont">
+          <div class="img-wrap">
+            <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
+          </div>
+          <div class="info-wrap">
+            <div class="tag-wrap">
+              <span class="tag color-green">#{{ item.bizcondNM }}</span>
+              <span class="tag color-green">#{{ item.mainMenuNM }}</span>
+            </div>
+            <span class="title color-green">{{ item.biszestblNM }}</span>
+            <p class="addr"><em></em>{{ item.refineRoadnmAddr }}</p>
+            <span class="tel-title">연락처</span>
+            <span class="tel">{{ item.telNo }}</span>
+          </div>
+        </div>
+        <button>자세히 보기</button>
+      </div>
+
+      <!-- 지역별로 나눠서 볼 때 사용 -->
+      <!-- <div class="cont" v-for="(totalItem, idx) in locationArr" :key="idx">
+        <div class="img-wrap">
+          <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
+        </div>
         <span class="title">{{ totalItem[0].sigunNM }}</span>
         <div class="item-wrap">
           <div v-for="(item, i) in totalItem" :key="i"  class="item">
@@ -27,7 +61,7 @@
           </div>
         </div>
         <button>자세히 보기</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -41,7 +75,11 @@ export default {
   },
   data() {
     return {
-      lacationArr: []
+      totalLocationArr: [],
+      totalLocationLength: 0,
+      locationArr: [],
+      locationArrLenth: 0,
+      sigunNMArr: []
     }
   },
   mounted() {
@@ -59,16 +97,21 @@ export default {
         // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
         jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
 
+        this.totalLocationArr = jsonData;
+        this.totalLocationLength = jsonData.length
+        // console.log("정렬 완료한 총 데이터", jsonData)
+
         // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
         const sigunNMArr = [...new Set(jsonData.map(item => item.sigunNM))];
-        console.log(sigunNMArr)
+        // console.log(sigunNMArr)
+        this.sigunNMArr = sigunNMArr;
 
         // 지역별로 필터링하여 새로운 배열 생성
         sigunNMArr.forEach(sigunItem => {
-          this.lacationArr.push(jsonData.filter(item => item.sigunNM == sigunItem));
+          this.locationArr.push(jsonData.filter(item => item.sigunNM == sigunItem));
         })
 
-        console.log(this.lacationArr)
+        // console.log(this.locationArr)
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
@@ -124,13 +167,6 @@ export default {
   box-shadow: 0px 4px 4px rgba(#000, 0.25);
 }
 
-/* 돋보기 아이콘 */
-.search-box i {
-  font-size: 20px;
-  color: #5f6368;
-  margin-right: 10px;
-}
-
 /* 입력 필드 스타일 */
 .search-input {
   flex: 1;
@@ -147,20 +183,11 @@ export default {
 
 /* 검색 버튼 스타일 */
 .search-button {
-  background-color: #f8f9fa;
+  width: 32px;
+  height: 32px;
+  background-image: url("../assets/search_icon.png");
   border: none;
-  padding: 8px 16px;
-  margin-left: 8px;
-  border-radius: 4px;
-  font-size: 14px;
-  color: #5f6368;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-/* 버튼 호버 효과 */
-.search-button:hover {
-  background-color: #e8e8e8;
+  background-color: inherit;
 }
 
 .list-container {
@@ -187,6 +214,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
+  height: 550px;
   overflow-y: scroll;
 
   .title-wrap {
@@ -197,36 +225,66 @@ export default {
 }
 
 .cont{
-  width: 95%;
+  width: 100%;
+  // width: 45%;
   padding: 35px 30px;
   border-radius: 15px;
   background-color: #fff;
   border: 1px solid #2E9A47;
 
-  .title {
-    display: block;
-    margin-bottom: 35px;
-    font-size: 30px;
-    font-weight: bold;
-  }
-
-  .item-wrap {
+  .info-cont {
     display: flex;
-    flex-wrap: wrap;
+    margin-bottom: 20px;
   }
 
-  .item {
-    width: 50%;
-    margin-bottom: 20px;
-    font-size: 18px;
-
-    .name {
-      font-weight: bold;
+  .info-wrap {
+    .tag-wrap {
+      .tag {
+        display: inline-block;
+        background-color: #E5FFEB;
+        border-radius: 5px;
+        font-size: 16px;
+        padding: 10px 15px;
+        border: 1px solid #2E9A47;
+        margin-right: 10px;
+      }
     }
 
-    .tag {
-      margin-left: 10px;
-      font-size: 15px;
+    .title {
+      display: block;
+      margin-top: 15px;
+    }
+
+    .addr {
+      display: flex;
+      margin-top: 9px;
+
+      em {
+        display: inline-block;
+        width: 17px;
+        height: 17px;
+        margin-right: 4px;
+        background-image: url("../assets/location_icon.png");
+      }
+    }
+
+    .tel-title {
+      display: block;
+      margin: 15px 0 5px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+  }
+
+  .img-wrap {
+    width: 165px;
+    height: 165px;
+    flex: 0 0 165px;
+    margin-right: 20px;
+
+    img {
+      width: 100%;
+      height: 100%;
     }
   }
 
