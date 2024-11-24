@@ -336,17 +336,5 @@ export default {
       height: 100%;
     }
   }
-
-  button {
-    width: 100%;
-    background-color: #2E9A47;
-    color: #fff;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    padding: 18px 0;
-    margin: 0 auto;
-    border: none;
-  }
 }
 </style>

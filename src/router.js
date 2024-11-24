@@ -6,6 +6,8 @@ import RestaurantListPage from "./components/RestaurantListPage.vue";
 import LocationPage from "./components/LocationPage.vue";
 import LoginPage from "./components/LoginPage.vue";
 import SignUpPage from "./components/SignUpPage.vue";
+import Detail from "./components/RestaurantDetail.vue";
+import Review from "./components/ReviewCont.vue";
 
 // 라우터 인스턴스 생성
 const routes = [
@@ -34,11 +36,16 @@ const routes = [
     name: "SignUp",
     component: SignUpPage, // <router-view>에서 보여질 컴포넌트
   },
-  // {
-  //   path: "/Detail",
-  //   name: "Detail",
-  //   component: Detail
-  // },
+  {
+    path: "/Detail",
+    name: "Detail",
+    component: Detail
+  },
+  {
+    path: "/Review",
+    name: "Review",
+    component: Review
+  },
   // {
   //   path: "/Detail/:id",   // 동적 라우트 매칭
   //   name: "DetailView",

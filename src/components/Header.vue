@@ -7,10 +7,9 @@
         <li class="active"><router-link to="/">메인</router-link></li>
         <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
         <li><router-link to="/Location">지도</router-link></li>
-        <li><router-link to="/Login">로그인</router-link></li>
       </ul>
       <ul class="login-wrap">
-        <li><router-link to="/">로그인</router-link></li>
+        <li><router-link to="/Login" class="color-green">로그인</router-link></li>
         <li><router-link to="/">회원가입</router-link></li>
       </ul>
     </nav>
@@ -60,22 +59,29 @@ export default {
 
     ul {
       display: flex;
-      gap: 20px;
+      gap: 45px;
   
-      li.active a {
-        font-weight: bold;
-        color: #2E9A47;
-  
-        a{
+      li {
+        a {
           font-size: 22px;
+        }
+        
+        &.active a {
+          font-weight: bold;
+          color: #2E9A47;
         }
       }
     }
 
     .login-wrap li {
+      a {
+        font-size: 22px;
+      }
+
       &:last-child a {
         padding: 8px 16px;
         color: #fff;
+        font-size: 20px;
         border-radius: 5px;
         background-color: #2E9A47;
       }
