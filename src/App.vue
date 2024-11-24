@@ -8,7 +8,9 @@
       <!-- <Login /> -->
       <!-- 변경될 페이지 보여질 공간 -->
       <div class="content-layout">
-        <router-view />
+        <div class="page-cont">
+          <router-view />
+        </div>
       </div>
       <FooterLayout />
     </div>
@@ -64,11 +66,18 @@ a {
 }
 .inner {
   padding: 0 140px;
+  height: 100%;
 }
 .content-layout {
   width: 100%;
-  height: calc(100% - 340px);
-  padding: 140px 0 340px;
+  height: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.page-cont {
+  height: calc(100% - 390px);
+  // height: auto;
+  padding: 140px 0 250px;
 }
 
 /* 스크롤바 전체 */

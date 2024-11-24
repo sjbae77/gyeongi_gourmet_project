@@ -13,12 +13,18 @@
       </div>
       <div class="sigun-wrap">
         <div class="sec">
-          <span>전체</span>
+          <div class="wrap">
+            <span>전체</span>
+            <em></em>
+          </div>
         </div>
         <div class="sec">
-          <span>경기</span>
-          <ul v-for="(item, idx) in sigunNMArr" :key="idx">
-            <li>{{ item }}</li>
+          <div class="wrap">
+            <span>경기</span>
+            <em></em>
+          </div>
+          <ul>
+            <li v-for="(item, idx) in sigunNMArr" :key="idx">{{ item }}</li>
           </ul>
         </div>
       </div>
@@ -149,7 +155,7 @@ export default {
 /* 검색창 스타일 */
 .search-wrap {
   width: 100%;
-  margin-top: 80px;
+  padding-top: 40px;
 
   .title {
     font-size: 38px;
@@ -194,18 +200,62 @@ export default {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
+  height: calc(100% - 262px);
 
   .category-wrap {
     width: 20%;
+    height: 100%;
   }
   .cont-wrap {
-    width: 75%;
+    width: 76%;
   }
 
   .title-wrap {
-    width: 100%;
     border-bottom: 1px solid #000;
     padding: 15px;
+  }
+}
+
+.sigun-wrap {
+  height: 100%;
+  overflow: scroll;
+
+  .sec {
+    &:last-child {
+      border-top: 1px solid #2E9A47;
+      border-bottom: 1px solid #D9D9D9;
+      background-color: #E5FFEB;
+      color: #3F3D56;
+
+      ul {
+        height: 100%;
+        overflow: scroll;
+
+        li {
+        padding: 18px 25px;
+      }
+      } 
+    }
+  }
+
+  .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    span {
+      display: inline-block;
+      font-weight: bold;
+      padding: 18px 15px;
+    }
+
+    em {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      margin-right: 15px;
+      background-image: url("../assets/arrow-up-icon.png");
+    }
   }
 }
 
@@ -214,7 +264,6 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  height: 550px;
   overflow-y: scroll;
 
   .title-wrap {
