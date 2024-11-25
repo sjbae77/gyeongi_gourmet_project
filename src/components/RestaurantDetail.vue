@@ -1,5 +1,5 @@
 <template>
-  <div class="detail-wrap">
+  <div class="detail-wrap result-cont">
     <div class="title-wrap">
       <span class="title">음식점 상세 정보</span>
       <em></em>
@@ -20,7 +20,6 @@
           <span class="tel">{{ item.telNo }}</span>
         </div>
       </div>
-      <button>닫기</button>
     </div>
   </div>
 </template>
@@ -86,7 +85,7 @@ export default {
 
 <style lang="scss">
 .detail-wrap {
-  padding: 32px 60px;
+  // padding: 32px 60px;
 
   .title-wrap {
     display: flex;
@@ -120,6 +119,8 @@ export default {
   }
 
   .info-wrap {
+    text-align: left;
+
     .title {
       font-size: 24px;
     }

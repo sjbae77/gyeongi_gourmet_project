@@ -56,7 +56,7 @@ strong {
   font-weight: bold;
 }
 .banner {
-  padding: 80px 38px 108px 64px;
+  padding: 70px 38px 98px 64px;
   border-radius: 40px;
   background-image: linear-gradient(to left, rgba(#00BF71, 0.2), #E5FFEB);
   color: #2E9A47;
@@ -83,7 +83,7 @@ strong {
 
 section {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   gap: 50px;
   margin-bottom: 120px;
   font-size: 20px;
@@ -102,8 +102,6 @@ section {
   padding-top: 50px;
 
   .img-wrap {
-    // width: 397px;
-    // height: 428px;
     width: 320px;
     height: 330px;
     flex: 0 0 320px;

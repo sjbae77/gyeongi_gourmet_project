@@ -3,7 +3,7 @@
     <div class="search-wrap">
       <span class="title color-green">음식점 목록</span>
       <div class="search-box">
-        <input type="text" class="search-input" placeholder="검색어를 입력해주세요">
+        <input type="text" id="searchInput" class="search-input" placeholder="검색어를 입력해주세요">
         <button class="search-button"></button>
       </div>
     </div>
@@ -15,17 +15,17 @@
         <div class="sigun-wrap">
           <div class="sec">
             <div class="wrap">
-              <span>전체</span>
+              <span @click="getData()">전체</span>
               <em></em>
             </div>
           </div>
           <div class="sec">
             <div class="wrap">
-              <span>경기</span>
+              <span @click="getSigunList()">경기</span>
               <em></em>
             </div>
             <ul>
-              <li v-for="(item, idx) in sigunNMArr" :key="idx">{{ item }}</li>
+              <li v-for="(item, idx) in sigunNMArr" :key="idx" @click="getData(item)">{{ item }}</li>
             </ul>
           </div>
         </div>
@@ -33,67 +33,123 @@
       <div class="cont-wrap">
         <div class="title-wrap">
           <span class="title color-green">검색 결과</span>
-          <span class="title color-green">총 {{ totalLocationLength }}건</span>
+          <span class="title color-green">총 {{ resultLength }}건</span>
         </div>
   
-        <div class="cont" v-for="(item, idx) in totalLocationArr" :key="idx">
-          <div class="info-cont">
-            <div class="img-wrap">
-              <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
-            </div>
-            <div class="info-wrap">
-              <div class="tag-wrap">
-                <span class="tag color-green">#{{ item.bizcondNM }}</span>
-                <span class="tag color-green">#{{ item.mainMenuNM }}</span>
+        <div class="result-cont" v-if="resultFlag">
+          <div class="cont" v-for="(item, idx) in resultArr" :key="idx">
+            <div class="info-cont">
+              <div class="img-wrap">
+                <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
               </div>
-              <span class="title color-green">{{ item.biszestblNM }}</span>
-              <p class="addr"><em></em>{{ item.refineRoadnmAddr }}</p>
-              <span class="tel-title">연락처</span>
-              <span class="tel">{{ item.telNo }}</span>
+              <div class="info-wrap">
+                <div class="tag-wrap">
+                  <span class="tag color-green">#{{ item.bizcondNM }}</span>
+                  <span class="tag color-green">#{{ item.mainMenuNM }}</span>
+                </div>
+                <span class="title color-green">{{ item.biszestblNM }}</span>
+                <p class="addr"><em></em>{{ item.refineRoadnmAddr }}</p>
+                <span class="tel-title">연락처</span>
+                <span class="tel">{{ item.telNo }}</span>
+              </div>
             </div>
+            <button @click="showModal = true">자세히 보기</button>
           </div>
-          <button>자세히 보기</button>
         </div>
-  
-        <!-- 지역별로 나눠서 볼 때 사용 -->
-        <!-- <div class="cont" v-for="(totalItem, idx) in locationArr" :key="idx">
-          <div class="img-wrap">
-            <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
+        <div v-else class="result-cont">
+          <div class="content-box">
+            <p>검색 결과가 없습니다.</p>
           </div>
-          <span class="title">{{ totalItem[0].sigunNM }}</span>
-          <div class="item-wrap">
-            <div v-for="(item, i) in totalItem" :key="i"  class="item">
-              <span class="name">{{ item.biszestblNM }}</span>
-              <span class="tag">- # {{ item.bizcondNM }} # {{ item.mainMenuNM }}</span>
-            </div>
-          </div>
-          <button>자세히 보기</button>
-        </div> -->
+        </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 모달 -->
+  <div v-if="showModal" class="modal-overlay">
+    <div class="modal">
+      <DetailModal />
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import DetailModal from './RestaurantDetail.vue';
 
 export default {
   name: 'RestaurantListPage',
   props: {
   },
+  components: {
+    DetailModal
+  },
   data() {
     return {
-      totalLocationArr: [],
-      totalLocationLength: 0,
-      locationArr: [],
-      locationArrLenth: 0,
-      sigunNMArr: []
+      resultArr: [],
+      resultLength: 0,
+      sigunNMArr: [],
+      resultFlag: false,
+      showModal: false,
     }
   },
   mounted() {
-    this.search();
+  
   },
   methods: {
+    getData(sigun) {
+      this.resultArr = [];
+      axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
+      .then(response => {
+        if(response.data != null && response.data != []) {
+          const xmlData = response.data;
+          let jsonData = this.parseXML(xmlData);
+          // console.log("xmlData", xmlData);
+          // console.log(jsonData); // JSON 데이터 출력
+          
+          // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
+          jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
+
+          this.resultArr = jsonData;
+          this.resultLength = jsonData.length;
+
+          this.resultFlag = true;
+
+          if(sigun) {
+            this.resultArr = [];
+
+            // 지역별로 필터링하여 새로운 배열 생성
+            this.sigunNMArr.forEach(sigunItem => {
+              if(sigunItem == sigun) {
+                this.resultArr.push(jsonData.filter(item => item.sigunNM == sigun));
+              }
+            })
+            this.resultArr = this.resultArr[0];
+            this.resultLength = this.resultArr.length;
+          }
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+    },
+    getSigunList() {
+      axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
+      .then(response => {
+        const xmlData = response.data;
+        let jsonData = this.parseXML(xmlData);
+        
+        // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
+        jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
+
+        // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
+        const sigunNMArr = [...new Set(jsonData.map(item => item.sigunNM))];
+        this.sigunNMArr = sigunNMArr;
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+    },
     search() {
       axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
       .then(response => {
@@ -104,6 +160,8 @@ export default {
         
         // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
         jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
+
+        this.dataArr = jsonData;
 
         this.totalLocationArr = jsonData;
         this.totalLocationLength = jsonData.length
@@ -125,7 +183,6 @@ export default {
         console.error('Error fetching data:', error);
       });
     },
-
     parseXML(xmlString) {
       const parser = new DOMParser();
       const xml = parser.parseFromString(xmlString, "text/xml");
@@ -213,6 +270,7 @@ export default {
   }
   .cont-wrap {
     width: 76%;
+    height: 100%;
   }
 
   .title-wrap {
@@ -252,6 +310,7 @@ export default {
       display: inline-block;
       font-weight: bold;
       padding: 18px 15px;
+      width: 70%;
     }
 
     em {
@@ -263,7 +322,74 @@ export default {
     }
   }
 }
+.result-cont {
+  width: 100%;
+  height: calc(100% - 85px);
 
+  .cont{
+    margin-bottom: 30px;
+    padding: 25px 20px;
+    border-radius: 15px;
+    background-color: #fff;
+    border: 1px solid #2E9A47;
+
+    .info-cont {
+      display: flex;
+      margin-bottom: 20px;
+    }
+
+    .info-wrap {
+      .tag-wrap {
+        .tag {
+          display: inline-block;
+          background-color: #E5FFEB;
+          border-radius: 5px;
+          font-size: 16px;
+          padding: 10px 15px;
+          border: 1px solid #2E9A47;
+          margin-right: 10px;
+        }
+      }
+
+      .title {
+        display: block;
+        margin-top: 15px;
+      }
+
+      .addr {
+        display: flex;
+        margin-top: 9px;
+
+        em {
+          display: inline-block;
+          width: 17px;
+          height: 17px;
+          margin-right: 4px;
+          background-image: url("../assets/location_icon.png");
+        }
+      }
+
+      .tel-title {
+        display: block;
+        margin: 15px 0 5px;
+        font-size: 16px;
+        font-weight: bold;
+      }
+    }
+
+    .img-wrap {
+      width: 165px;
+      height: 165px;
+      flex: 0 0 165px;
+      margin-right: 20px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
 .cont-wrap {
   display: flex;
   flex-wrap: wrap;
@@ -273,74 +399,31 @@ export default {
 
   .title-wrap {
     width:100%;
+    height: 23px;
     display: flex; 
     justify-content: space-between;
   }
 }
 
-.cont{
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  // width: 45%;
-  // padding: 35px 30px;
-  padding: 25px 20px;
-  border-radius: 15px;
-  background-color: #fff;
-  border: 1px solid #2E9A47;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .info-cont {
-    display: flex;
-    margin-bottom: 20px;
-  }
-
-  .info-wrap {
-    .tag-wrap {
-      .tag {
-        display: inline-block;
-        background-color: #E5FFEB;
-        border-radius: 5px;
-        font-size: 16px;
-        padding: 10px 15px;
-        border: 1px solid #2E9A47;
-        margin-right: 10px;
-      }
-    }
-
-    .title {
-      display: block;
-      margin-top: 15px;
-    }
-
-    .addr {
-      display: flex;
-      margin-top: 9px;
-
-      em {
-        display: inline-block;
-        width: 17px;
-        height: 17px;
-        margin-right: 4px;
-        background-image: url("../assets/location_icon.png");
-      }
-    }
-
-    .tel-title {
-      display: block;
-      margin: 15px 0 5px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-  }
-
-  .img-wrap {
-    width: 165px;
-    height: 165px;
-    flex: 0 0 165px;
-    margin-right: 20px;
-
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
+.modal {
+  width: 800px;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 </style>

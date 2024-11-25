@@ -1,6 +1,6 @@
 <template>
 <header class="header">
-  <div class="inner">
+  <div class="header-inner">
     <h1><router-link to="/">Gourmet Site</router-link></h1>
     <nav class="nav">
       <ul class="menu-wrap">
@@ -35,12 +35,13 @@ export default {
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   background-color: #fff;
   
-  .inner {
+  .header-inner {
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
+    height: 100%;
   }
 
   h1 {
