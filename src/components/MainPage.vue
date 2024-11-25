@@ -1,6 +1,6 @@
 <template>
-  <div class="scroll-cont">
-    <!-- <div class="banner">
+  <div class="main-page-cont">
+    <div class="banner">
       <div class="left">
         <p>
           경기도의 바르고 좋은 음식점을 소개합니다
@@ -15,7 +15,7 @@
         <span># 맛집</span>
         <span># 믿음직한 위생 상태</span>
       </div>
-    </div> -->
+    </div>
     <section class="sec1">
       <div class="img-wrap">
         <img src="../assets/good_restaurant.jpg" alt="모범 음식점 인증 마크">
@@ -35,7 +35,7 @@
         <strong>안전성 - </strong> 조리 과정에서의 안전 준수, 고객의 안전을 고려한 시설물 관리 등이 포함됩니다.<br />
         <strong>기타 - </strong> 지속적인 품질 유지와 지역 사회 기여도, 친환경 경영 등도 일부 평가 항목에 포함될 수 있습니다.<br />
       </p>
-    </section>
+    </section>  
   </div>
 </template>
 
@@ -49,12 +49,14 @@ export default {
 </script>
 
 <style lang="scss">
+.main-page-cont {
+  padding: 50px 0;
+}
 strong {
   font-weight: bold;
 }
 .banner {
-  margin-top: 80px;
-  padding: 100px 38px 128px 64px;
+  padding: 80px 38px 108px 64px;
   border-radius: 40px;
   background-image: linear-gradient(to left, rgba(#00BF71, 0.2), #E5FFEB);
   color: #2E9A47;
@@ -97,11 +99,14 @@ section {
 }
 
 .sec1 {
+  padding-top: 50px;
+
   .img-wrap {
-    margin-top: 127px;
-    width: 397px;
-    height: 428px;
-    flex: 0 0 397px;
+    // width: 397px;
+    // height: 428px;
+    width: 320px;
+    height: 330px;
+    flex: 0 0 320px;
   
     img {
       width: 100%;

@@ -1,20 +1,20 @@
 <template>
+  <HeaderLayout />
   <div class="container">
     <div class="inner">
-      <HeaderLayout />
       <!-- <MainPage />
       <RestaurantList />
       <Location /> -->
       <!-- <Login /> -->
       <!-- 변경될 페이지 보여질 공간 -->
       <div class="content-layout">
-        <div class="page-cont">
+        <!-- <div class="page-cont"> -->
           <router-view />
-        </div>
+        <!-- </div> -->
       </div>
-      <FooterLayout />
     </div>
   </div>
+  <FooterLayout />
   <!-- <Main msg ="hello" /> -->
 </template>
 
@@ -62,22 +62,21 @@ a {
 }
 .container {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 180px); // 헤더, 푸터를 제외한 컨텐츠 영역
+  padding-top: 80px;
 }
 .inner {
   padding: 0 140px;
   height: 100%;
+  overflow: scroll;
 }
 .content-layout {
   width: 100%;
   height: 100%;
+  // height: auto;
   max-width: 1200px;
   margin: 0 auto;
-}
-.page-cont {
-  height: calc(100% - 390px);
-  // height: auto;
-  padding: 140px 0 250px;
+  // padding: 50px 0;
 }
 
 /* 스크롤바 전체 */

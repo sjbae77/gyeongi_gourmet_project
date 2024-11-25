@@ -21,13 +21,13 @@ export default {
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 200px;
+  height: 100px;
   background-color: #1E3049;
-  color: #fff;
+  color: #e9e9e9;
   display: flex;
   align-items: center;
   justify-content: center;
   line-height: 25px;
-  font-size: 16px;
+  font-size: 14px;
 }
 </style>

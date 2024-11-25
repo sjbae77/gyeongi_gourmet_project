@@ -1,7 +1,7 @@
 <template>
 <header class="header">
   <div class="inner">
-    <h1><router-link to="/">모범 음식점 소개 사이트</router-link></h1>
+    <h1><router-link to="/">Gourmet Site</router-link></h1>
     <nav class="nav">
       <ul class="menu-wrap">
         <li class="active"><router-link to="/">메인</router-link></li>
@@ -31,11 +31,11 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  height: 80px;
   box-shadow: 0 5px 15px rgba(0,0,0,0.1);
   background-color: #fff;
   
   .inner {
-    height: 140px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,7 +44,7 @@ export default {
   }
 
   h1 {
-    font-size: 32px;
+    font-size: 28px;
     font-weight: bold;
 
     a {
@@ -59,11 +59,11 @@ export default {
 
     ul {
       display: flex;
-      gap: 45px;
+      gap: 25px;
   
       li {
         a {
-          font-size: 22px;
+          font-size: 18px;
         }
         
         &.active a {
@@ -75,13 +75,13 @@ export default {
 
     .login-wrap li {
       a {
-        font-size: 22px;
+        font-size: 18px;
       }
 
       &:last-child a {
         padding: 8px 16px;
         color: #fff;
-        font-size: 20px;
+        font-size: 16px;
         border-radius: 5px;
         background-color: #2E9A47;
       }
