@@ -1,9 +1,5 @@
 <template>
   <div class="detail-wrap result-cont">
-    <div class="title-wrap">
-      <span class="title">음식점 상세 정보</span>
-      <em></em>
-    </div>
     <div class="cont" >
       <div class="info-cont">
         <div class="img-wrap">
@@ -11,13 +7,13 @@
         </div>
         <div class="info-wrap">
           <div class="tag-wrap">
-            <span class="tag color-green">#{{ item.bizcondNM }}</span>
-            <span class="tag color-green">#{{ item.mainMenuNM }}</span>
+            <span class="tag color-green">#{{ tag1 }}</span>
+            <span class="tag color-green">#{{ tag2 }}</span>
           </div>
-          <span class="title color-green">{{ item.biszestblNM }}</span>
-          <p class="addr"><em></em>{{ item.refineRoadnmAddr }}</p>
+          <span class="title color-green">{{ title }}</span>
+          <p class="addr"><em></em>{{ addr }}</p>
           <span class="tel-title">연락처</span>
-          <span class="tel">{{ item.telNo }}</span>
+          <span class="tel">{{ tel }}</span>
         </div>
       </div>
     </div>
@@ -30,6 +26,26 @@ import axios from 'axios';
 export default {
   name: 'RestaurantDetailModal',
   props: {
+    tag1: {
+      type: String,
+      default: null
+    },
+    tag2: {
+      type: String,
+      default: null
+    },
+    title: {
+      type: String,
+      default: null
+    },
+    addr: {
+      type: String,
+      default: null
+    },
+    tel: {
+      type: String,
+      default: null
+    },
   },
   data() {
     return {
@@ -86,26 +102,6 @@ export default {
 <style lang="scss">
 .detail-wrap {
   // padding: 32px 60px;
-
-  .title-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #999999;
-    margin-bottom: 36px;
-
-    .title {
-      display: block;
-      padding: 20px;
-      font-size: 32px;
-      font-weight: bold;
-    }
-    em {
-      width: 33px;
-      height: 33px;
-      background-image: url("../assets/close-icon.png");
-    }
-  }
 
   .cont{
     padding: 0;

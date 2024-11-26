@@ -53,7 +53,7 @@
                 <span class="tel">{{ item.telNo }}</span>
               </div>
             </div>
-            <button @click="showModal = true">자세히 보기</button>
+            <button @click="openModal(item)">자세히 보기</button>
           </div>
         </div>
         <div v-else class="result-cont">
@@ -68,7 +68,11 @@
   <!-- 모달 -->
   <div v-if="showModal" class="modal-overlay">
     <div class="modal">
-      <DetailModal />
+      <div class="title-wrap">
+        <span class="title">음식점 상세 정보</span>
+        <em @click="closeModal()"></em>
+      </div>
+      <DetailModal :tag1="clickItem.bizcondNM" :tag2="clickItem.mainMenuNM" :title="clickItem.biszestblNM" :addr="clickItem.refineRoadnmAddr" :tel="clickItem.telNo"/>
     </div>
   </div>
 </template>
@@ -91,6 +95,7 @@ export default {
       sigunNMArr: [],
       resultFlag: false,
       showModal: false,
+      clickItem: null,
     }
   },
   mounted() {
@@ -111,6 +116,7 @@ export default {
           jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
 
           this.resultArr = jsonData;
+          console.log(this.resultArr)
           this.resultLength = jsonData.length;
 
           this.resultFlag = true;
@@ -205,6 +211,13 @@ export default {
       }
 
       return result;
+    },
+    openModal(item) {
+      this.showModal = true;
+      this.clickItem = item;
+    },
+    closeModal() {
+      this.showModal = false;
     }
   }
 }
@@ -425,5 +438,25 @@ export default {
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+
+  .title-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #999999;
+    margin-bottom: 36px;
+
+    .title {
+      display: block;
+      padding: 20px;
+      font-size: 32px;
+      font-weight: bold;
+    }
+    em {
+      width: 33px;
+      height: 33px;
+      background-image: url("../assets/close-icon.png");
+    }
+  }
 }
 </style>

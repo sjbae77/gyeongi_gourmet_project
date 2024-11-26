@@ -10,7 +10,7 @@
       </ul>
       <ul class="login-wrap">
         <li><router-link to="/Login" class="color-green">로그인</router-link></li>
-        <li><router-link to="/">회원가입</router-link></li>
+        <li><router-link to="/SignUp">회원가입</router-link></li>
       </ul>
     </nav>
   </div>
