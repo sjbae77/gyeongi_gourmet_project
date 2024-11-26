@@ -8,7 +8,11 @@
         <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
         <li><router-link to="/Location">지도</router-link></li>
       </ul>
-      <ul class="login-wrap">
+      <ul v-if="isAuthenticated" class="login-wrap">
+        <li><router-link to="" class="color-green">{{ currentUser.email }} 님</router-link></li>
+        <li><router-link to="/" @click="logout">로그아웃</router-link></li>
+      </ul>
+      <ul v-else class="login-wrap">
         <li><router-link to="/Login" class="color-green">로그인</router-link></li>
         <li><router-link to="/SignUp">회원가입</router-link></li>
       </ul>
@@ -18,15 +22,28 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   name: 'HeaderLayout',
+  data() {
+    return {
+      // loginFlag: false,
+    }
+  },
   props: {
-  }
+  },
+  computed: {
+    ...mapGetters(["isAuthenticated", "currentUser"]), // Vuex 상태를 계산 속성으로 가져오기
+  },
+  methods: {
+    ...mapActions(["logout"]), // Vuex 액션 가져오기
+  },
 }
 </script>
 
 <style lang="scss">
-.header { 
+.header {
   position: fixed;
   top: 0;
   left: 0;

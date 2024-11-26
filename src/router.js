@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import store from "./store/index"; // Vuex Store 가져오기
 
 // 컴포넌트
 import MainPage from "./components/MainPage.vue";
@@ -56,6 +57,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = !!store.state.user; // Vuex의 사용자 상태 확인
+  if (to.meta.requiresAuth && !isAuthenticated) {
+    // 인증이 필요한 페이지에 접근하려면 로그인 페이지로 리다이렉트
+    next({ name: "Login" });
+  } else {
+    next(); // 접근 허용
+  }
 });
 
 export default router;

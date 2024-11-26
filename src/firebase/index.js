@@ -22,7 +22,6 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 export const signUpEmail = (email, password) => {
@@ -32,3 +31,5 @@ export const signUpEmail = (email, password) => {
 export const loginEmail = (email, password) => {
   return signInWithEmailAndPassword(auth, email, password);
 };
+
+export { auth };

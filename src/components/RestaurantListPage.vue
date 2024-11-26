@@ -115,7 +115,12 @@ export default {
                                                               || item.biszestblNM.includes(keyword)
                                                               || item.refineRoadnmAddr.includes(keyword)
                                                               || item.telNo.includes(keyword));
-      this.resultFlag = true;
+      if(searchResultArr.length < 1) {
+        this.resultFlag = false;
+      } else {
+        this.resultFlag = true;
+      }
+
       this.resultArr = searchResultArr;
       this.resultLength = searchResultArr.length;
     },
