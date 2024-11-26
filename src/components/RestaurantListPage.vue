@@ -3,8 +3,8 @@
     <div class="search-wrap">
       <span class="title color-green">음식점 목록</span>
       <div class="search-box">
-        <input type="text" id="searchInput" class="search-input" placeholder="검색어를 입력해주세요">
-        <button class="search-button"></button>
+        <input type="text" id="searchInput" @keyup.enter="search()" class="search-input" placeholder="검색어를 입력해주세요">
+        <button class="search-button" @click="search()"></button>
       </div>
     </div>
     <div class="list-container">
@@ -103,6 +103,22 @@ export default {
     this.getTotalData();
   },
   methods: {
+    search() {
+      const inputValue = document.getElementById('searchInput').value;
+      if(inputValue != null && inputValue != "") {
+        this.getSearchData(inputValue);
+      }
+    },
+    getSearchData(keyword) {
+      const searchResultArr = this.totalResultArr.filter(item => item.bizcondNM.includes(keyword) 
+                                                              || item.mainMenuNM.includes(keyword)
+                                                              || item.biszestblNM.includes(keyword)
+                                                              || item.refineRoadnmAddr.includes(keyword)
+                                                              || item.telNo.includes(keyword));
+      this.resultFlag = true;
+      this.resultArr = searchResultArr;
+      this.resultLength = searchResultArr.length;
+    },
     getTotalData() {
       axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
       .then(response => {
@@ -136,7 +152,6 @@ export default {
             this.resultLength = this.resultArr.length;
           }
       }
-          
     },
     getSigunList() {
       // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
