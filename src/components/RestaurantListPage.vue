@@ -90,6 +90,7 @@ export default {
   },
   data() {
     return {
+      totalResultArr: [],
       resultArr: [],
       resultLength: 0,
       sigunNMArr: [],
@@ -99,27 +100,28 @@ export default {
     }
   },
   mounted() {
-  
+    this.getTotalData();
   },
   methods: {
-    getData(sigun) {
-      this.resultArr = [];
+    getTotalData() {
       axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
       .then(response => {
-        if(response.data != null && response.data != []) {
-          const xmlData = response.data;
-          let jsonData = this.parseXML(xmlData);
-          // console.log("xmlData", xmlData);
-          // console.log(jsonData); // JSON 데이터 출력
-          
-          // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
-          jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
-
-          this.resultArr = jsonData;
-          console.log(this.resultArr)
-          this.resultLength = jsonData.length;
-
-          this.resultFlag = true;
+        const xmlData = response.data;
+        let jsonData = this.parseXML(xmlData);
+        
+        // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬하여 totalResultArr에 저장
+        jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
+        this.totalResultArr = jsonData;
+      })
+      .catch((error) => {
+        console.error('Error fetching data:', error);
+      });
+    },
+    getData(sigun) {
+      if(this.totalResultArr != []) {
+        this.resultFlag = true;
+        this.resultArr = this.totalResultArr;
+        this.resultLength = this.totalResultArr.length;
 
           if(sigun) {
             this.resultArr = [];
@@ -127,67 +129,19 @@ export default {
             // 지역별로 필터링하여 새로운 배열 생성
             this.sigunNMArr.forEach(sigunItem => {
               if(sigunItem == sigun) {
-                this.resultArr.push(jsonData.filter(item => item.sigunNM == sigun));
+                this.resultArr.push(this.totalResultArr.filter(item => item.sigunNM == sigun));
               }
             })
             this.resultArr = this.resultArr[0];
             this.resultLength = this.resultArr.length;
           }
-        }
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+      }
+          
     },
     getSigunList() {
-      axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
-      .then(response => {
-        const xmlData = response.data;
-        let jsonData = this.parseXML(xmlData);
-        
-        // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
-        jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
-
-        // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
-        const sigunNMArr = [...new Set(jsonData.map(item => item.sigunNM))];
-        this.sigunNMArr = sigunNMArr;
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-    },
-    search() {
-      axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
-      .then(response => {
-        const xmlData = response.data;
-        let jsonData = this.parseXML(xmlData);
-        // console.log("xmlData", xmlData);
-        // console.log(jsonData); // JSON 데이터 출력
-        
-        // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
-        jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
-
-        this.dataArr = jsonData;
-
-        this.totalLocationArr = jsonData;
-        this.totalLocationLength = jsonData.length
-        // console.log("정렬 완료한 총 데이터", jsonData)
-
-        // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
-        const sigunNMArr = [...new Set(jsonData.map(item => item.sigunNM))];
-        // console.log(sigunNMArr)
-        this.sigunNMArr = sigunNMArr;
-
-        // 지역별로 필터링하여 새로운 배열 생성
-        sigunNMArr.forEach(sigunItem => {
-          this.locationArr.push(jsonData.filter(item => item.sigunNM == sigunItem));
-        })
-
-        // console.log(this.locationArr)
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
+      // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
+      const sigunNMArr = [...new Set(this.totalResultArr.map(item => item.sigunNM))];
+      this.sigunNMArr = sigunNMArr;
     },
     parseXML(xmlString) {
       const parser = new DOMParser();
