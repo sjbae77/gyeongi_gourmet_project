@@ -2,10 +2,20 @@
   <div class="review-wrap">
     <div class="title-wrap">
       <span class="title color-green">리뷰</span>
-      <span class="title color-green">총 000건</span>
+      <span class="title color-green">총 {{reviewCount}}건</span>
     </div>
     <div class="review-cont-wrap">
-      <div class="review-cont" >
+      <div v-for="post in posts" :key="post.id" class="review-cont">
+        <div class="top">
+          <span>{{ post.author }}</span>
+          <span>{{ new Date(post.createdAt.seconds * 1000).toLocaleString() }}</span>
+        </div>
+        <!-- <h3>{{ post.title }}</h3> -->
+        <p>
+          {{ post.content }}
+        </p>
+      </div>
+      <!-- <div class="review-cont" >
         <div class="top">
           <span>유저 ID 및 닉네임</span>
           <span>2024-11-24</span>
@@ -14,24 +24,15 @@
           가족들과 방문하기 딱 좋은 분위기였습니다<br />
           직원분들도 친절하시고 음식도 맛있어서 좋은 가족모임이 되었습니다! 다시 방문할 의사가 있는 맛집입니다~
         </p>
-      </div>
-      <div class="review-cont" >
-        <div class="top">
-          <span>유저 ID 및 닉네임</span>
-          <span>2024-11-24</span>
-        </div>
-        <p>
-          가족들과 방문하기 딱 좋은 분위기였습니다<br />
-          직원분들도 친절하시고 음식도 맛있어서 좋은 가족모임이 되었습니다! 다시 방문할 의사가 있는 맛집입니다~
-        </p>
-      </div>
+      </div> -->
     </div>
     <button>닫기</button>
   </div>
 </template>
 
 <script>
-// import axios from 'axios';
+import { fetchPosts, subscribeToPosts } from "../firebase";
+import { subscribeToPostCount } from "../firebase/index";
 
 export default {
   name: 'ReviewCont',
@@ -40,51 +41,31 @@ export default {
   data() {
     return {
       item: [],
+      posts: [],
+      reviewCount: 0,
     }
   },
   mounted() {
-      // axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
-      // .then(response => {
-      //   const xmlData = response.data;
-      //   let jsonData = this.parseXML(xmlData);
-      //   // console.log("xmlData", xmlData);
-      //   // console.log(jsonData); // JSON 데이터 출력
-        
-      //   // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
-      //   jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
-
-      //   this.item = jsonData[0];
-
-      //   console.log(this.item)
-      // })
-      // .catch((error) => {
-      //   console.error('Error fetching data:', error);
-      // });
+    this.mounted();
+    subscribeToPostCount((count) => {
+      // console.log(`실시간 등록된 데이터 개수: ${count}`);
+      this.reviewCount = count;
+    });
   },
   methods: {
-    parseXML(xmlString) {
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(xmlString, "text/xml");
-
-      // 필요한 데이터 추출
-      const items = xml.getElementsByTagName("row");
-      const result = [];
-      
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        const sumYY = item.getElementsByTagName("SUM_YY")[0].textContent; // 집계년도
-        const sigunCode = item.getElementsByTagName("SIGUN_CD")[0].textContent; // 시군코드
-        const sigunNM = item.getElementsByTagName("SIGUN_NM")[0].textContent; // 시군명
-        const biszestblNM = item.getElementsByTagName("BIZESTBL_NM")[0].textContent; // 업소명
-        const bizcondNM = item.getElementsByTagName("BIZCOND_NM")[0].textContent; // 업태명
-        const telNo = item.getElementsByTagName("TELNO")[0].textContent; // 전화번호
-        const mainMenuNM = item.getElementsByTagName("MAIN_MENU_NM")[0].textContent; // 주메뉴명
-        const refineRoadnmAddr = item.getElementsByTagName("REFINE_ROADNM_ADDR")[0].textContent; // 소재지 도로명 주소
-        result.push({ sumYY, sigunCode, sigunNM, biszestblNM, bizcondNM, telNo, mainMenuNM, refineRoadnmAddr });
+    async mounted() {
+      // Firestore에서 한 번 데이터 가져오기
+      try {
+        this.posts = await fetchPosts();
+      } catch (error) {
+        console.error("글 목록 불러오기 실패:", error);
       }
 
-      return result;
-    }
+      // Firestore 실시간 데이터 구독
+      subscribeToPosts((updatedPosts) => {
+        this.posts = updatedPosts;
+      });
+    },
   }
 }
 </script>

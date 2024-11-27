@@ -9,6 +9,7 @@ import LoginPage from "./components/LoginPage.vue";
 import SignUpPage from "./components/SignUpPage.vue";
 import Detail from "./components/RestaurantDetail.vue";
 import Review from "./components/ReviewCont.vue";
+import ReviewWrite from "./components/ReviewWrite.vue";
 
 // 라우터 인스턴스 생성
 const routes = [
@@ -46,6 +47,11 @@ const routes = [
     path: "/Review",
     name: "Review",
     component: Review
+  },
+  {
+    path: "/ReviewWirte",
+    name: "ReviewWirte",
+    component: ReviewWrite
   },
   // {
   //   path: "/Detail/:id",   // 동적 라우트 매칭
