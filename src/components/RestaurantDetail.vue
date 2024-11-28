@@ -62,10 +62,7 @@ export default {
         
         // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬
         jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
-
         this.item = jsonData[0];
-
-        console.log(this.item)
       })
       .catch((error) => {
         console.error('Error fetching data:', error);

@@ -73,6 +73,8 @@
         <em @click="closeModal()"></em>
       </div>
       <DetailModal :tag1="clickItem.bizcondNM" :tag2="clickItem.mainMenuNM" :title="clickItem.biszestblNM" :addr="clickItem.refineRoadnmAddr" :tel="clickItem.telNo"/>
+      <ReviewCont :restaurant="clickItem.biszestblNM" />
+      
     </div>
   </div>
 </template>
@@ -80,13 +82,15 @@
 <script>
 import axios from 'axios';
 import DetailModal from './RestaurantDetail.vue';
+import ReviewCont from '@/components/ReviewCont.vue';
 
 export default {
   name: 'RestaurantListPage',
   props: {
   },
   components: {
-    DetailModal
+    DetailModal,
+    ReviewCont
   },
   data() {
     return {
