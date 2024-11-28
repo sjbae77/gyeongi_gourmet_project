@@ -42,4 +42,14 @@ const store = createStore({
   },
 });
 
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     // 사용자 로그인 상태
+//     console.log("현재 로그인된 사용자:", user.email);
+//   } else {
+//     // 사용자 로그아웃 상태
+//     console.log("로그인된 사용자가 없습니다.");
+//   }
+// });
+
 export default store;

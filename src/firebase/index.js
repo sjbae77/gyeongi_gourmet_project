@@ -9,6 +9,9 @@ import {
   // GoogleAuthProvider, //google login 기능
   signInWithEmailAndPassword, // email 로그인
   createUserWithEmailAndPassword, //email 회원가입
+  // setPersistence, // 인증 상태 지속성
+  // browserLocalPersistence,
+  // borswerSessionPersistence 
 } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -32,7 +35,16 @@ export const signUpEmail = (email, password) => {
 };
 
 export const loginEmail = (email, password) => {
-  return signInWithEmailAndPassword(auth, email, password);
+  // return  setPersistence(auth, browserLocalPersistence)
+  // .then(() => {
+    return signInWithEmailAndPassword(auth, email, password);
+  // })
+  // .catch((error) => {
+  //   // Handle Errors here.
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   console.log(errorCode+ " : " +  errorMessage);
+  // });
 };
 
 export { auth };
