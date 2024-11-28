@@ -113,6 +113,24 @@ button {
   padding: 18px 0;
   margin: 0 auto;
   border: none;
+  cursor: pointer;
+
+  &:hover {
+    background-color: darken(#2E9A47, 10%);
+    transition: all 0.2s;
+  }
+
+  &.darkColor {
+    background-color: #005f00;
+
+    &:hover {
+      background-color: darken(#005f00, 10%);
+    }
+  }
+}
+
+.btn-close {
+  cursor: pointer;
 }
 
 </style>

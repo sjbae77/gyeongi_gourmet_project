@@ -1,11 +1,16 @@
 <template>
-  <div class="sign-up">
-    <p>회원가입</p>
-    <input type="text" v-model="email" placeholder="email"><br>
-    <input type="password" v-model="password" placeholder="password"><br>
-    <button><router-link to="/Login">로그인</router-link></button>
-    <button v-on:click="signUp">가입하기</button>
-  </div>
+  <div class="login-container sign-up">
+    <div class="cont">
+      <h2 class="title">회원가입</h2>
+      <div class="input-wrap">
+        <input type="text" v-model="email" placeholder="email"><br>
+        <input type="password" v-model="password" placeholder="password"><br>
+      </div>
+      <div class="btn-wrap">
+        <button @click="signUp">가입하기</button>
+      </div>
+    </div>
+    </div>
 </template>
 
 <script>
@@ -58,26 +63,4 @@ import { signUpEmail } from "../firebase/index.js";
 </script>
 
 <style scoped>
-  .signUp {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
-    margin-top: 20px;
-    width: 10%;
-    cursor: pointer;
-  }
-  p {
-    margin-top: 40px;
-    font-size: 20px;
-  }
-  span {
-    display: block;
-    margin-top: 20px;
-    font-size: 15px;
-  }
 </style>

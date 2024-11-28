@@ -1,14 +1,14 @@
 <template>
   <div class="login-container">
     <div class="cont">
-      <span class="title">로그인</span>
+      <h2 class="title">로그인</h2>
       <div class="input-wrap">
         <input type="text" v-model="email" placeholder="email"><br>
         <input type="password" v-model="password" placeholder="password"><br>
       </div>
       <div class="btn-wrap">
         <button @click="login()">로그인</button>
-        <button><router-link to="/SignUp">회원가입</router-link></button>
+        <button class="darkColor"><router-link to="/SignUp">회원가입</router-link></button>
       </div>
     </div>
   </div>
@@ -86,6 +86,7 @@ export default {
     display: block;
     margin-bottom: 30px;
     font-size: 30px;
+    font-weight: bold;
   }
 
 
@@ -112,6 +113,11 @@ export default {
 
     button {
       cursor: pointer;
+
+      a {
+        color: #fff;
+      }
+
     }
   }
 }

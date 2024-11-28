@@ -10,8 +10,8 @@
     <div v-if="!showReviewWrite" class="review-cont-wrap">
       <div v-for="review in reviews" :key="review.id" class="review-cont">
         <div class="top">
-          <span>{{ review.title }}</span>
-          <span>{{ review.timestamp }}</span>
+          <span>{{ review.userInfo }}</span>
+          <span v-if="review.timestamp">{{ new Date(review.timestamp.seconds * 1000).toLocaleString() }}</span>
         </div>
         <p>
           {{ review.comment }}
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div v-else class="review-cont-wrap">
-      <ReviewWrite :restaurantName="restaurant" />
+      <ReviewWrite :restaurantName="restaurant" @writeMode="updateReview" />
     </div>
     <button v-if="!showReviewWrite" @click="modeChange">리뷰 등록</button>
   </div>
@@ -27,14 +27,16 @@
 
 <script>
 import ReviewWrite from "@/components/ReviewWrite.vue";
-import { fetchPosts, subscribeToPosts } from "../firebase";
-import { subscribeToPostCount } from "../firebase/index";
 import { db } from "@/firebase"; // Firebase Firestore 초기화
 import { collection, onSnapshot } from "firebase/firestore";
+import { mapGetters } from "vuex";
 
 export default {
   name: 'ReviewCont',
   props: ["restaurant"],
+  computed: {
+    ...mapGetters(["isAuthenticated", "currentUser"]), // Vuex 상태를 계산 속성으로 가져오기
+  },
   components:{
     ReviewWrite
   },
@@ -46,34 +48,30 @@ export default {
     }
   },
   mounted() {
-    // this.mounted();
     this.fetchReviews();
-    subscribeToPostCount((count) => {
-      // console.log(`실시간 등록된 데이터 개수: ${count}`);
-      this.reviewCount = count;
-    });
   },
   methods: {
+    // updateReview(newValue) {
+    //   this.showReviewWrite = newValue; // 하위 컴포넌트 값 업데이트
+    // },
+    updateReview(newValue) {
+      // console.log("####", this.newValue)
+      this.showReviewWrite = newValue; // 하위 컴포넌트 값 업데이트
+    },
     fetchReviews() {
       const reviewsRef = collection(db, `restaurants/${this.restaurant}/reviews`);
       onSnapshot(reviewsRef, (snapshot) => {
+        // 리뷰 데이터 저장
         this.reviews = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      });
-    },
-    async mounted() {
-      // Firestore에서 한 번 데이터 가져오기
-      try {
-        this.posts = await fetchPosts();
-      } catch (error) {
-        console.error("글 목록 불러오기 실패:", error);
-      }
-
-      // Firestore 실시간 데이터 구독
-      subscribeToPosts((updatedPosts) => {
-        this.posts = updatedPosts;
+        // 총 리뷰 수 저장
+        this.reviewCount = snapshot.size;
       });
     },
     modeChange() {
+      if(!this.currentUser) {
+        alert("로그인을 해주세요.");
+        return;
+      }
       this.showReviewWrite = !this.showReviewWrite;
     }
   }
@@ -92,6 +90,9 @@ export default {
 }
 .review-cont-wrap {
   margin: 20px 0 40px;
+  padding: 10px;
+  height: 300px;
+  overflow-y: scroll;
 
   .review-cont {
     margin-bottom: 16px;
@@ -106,14 +107,18 @@ export default {
       margin-bottom: 14px;
 
       span {
-      font-size: 18px;
-      font-weight: bold;
+        font-size: 18px;
+        font-weight: bold;
 
-      &:last-child {
-        font-weight: normal;
-        color: #999;
+        &:last-child {
+          font-weight: normal;
+          color: #999;
+        }
       }
     }
+
+    p {
+      text-align: left;
     }
   }
 }

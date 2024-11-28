@@ -6,7 +6,7 @@
       <ul class="menu-wrap">
         <li class="active"><router-link to="/">메인</router-link></li>
         <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
-        <li><router-link to="/Location">지도</router-link></li>
+        <!-- <li><router-link to="/Location">지도</router-link></li> -->
       </ul>
       <ul v-if="isAuthenticated" class="login-wrap">
         <li><router-link to="" class="color-green">{{ currentUser.email }} 님</router-link></li>

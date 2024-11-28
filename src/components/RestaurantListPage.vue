@@ -16,16 +16,17 @@
           <div class="sec">
             <div class="wrap">
               <span @click="getData()">전체</span>
-              <em></em>
+              <em class="upArrow"></em>
             </div>
           </div>
           <div class="sec">
             <div class="wrap">
               <span @click="getSigunList()">경기</span>
-              <em></em>
+              <em v-if="menuExpand" class="downArrow"></em>
+              <em v-else class="upArrow"></em>
             </div>
-            <ul>
-              <li v-for="(item, idx) in sigunNMArr" :key="idx" @click="getData(item)">{{ item }}</li>
+            <ul v-if="menuExpand">
+              <li v-for="(item, idx) in sigunNMArr" :key="idx" @click="getData(item,idx)" :class="{ selected: selectedIndex === idx }">{{ item }}</li>
             </ul>
           </div>
         </div>
@@ -70,7 +71,7 @@
     <div class="modal">
       <div class="title-wrap">
         <span class="title">음식점 상세 정보</span>
-        <em @click="closeModal()"></em>
+        <em @click="closeModal()" class="btn-close"></em>
       </div>
       <DetailModal :tag1="clickItem.bizcondNM" :tag2="clickItem.mainMenuNM" :title="clickItem.biszestblNM" :addr="clickItem.refineRoadnmAddr" :tel="clickItem.telNo"/>
       <ReviewCont :restaurant="clickItem.biszestblNM" />
@@ -101,6 +102,8 @@ export default {
       resultFlag: false,
       showModal: false,
       clickItem: null,
+      menuExpand: false,
+      selectedIndex: null, // 선택된 항목의 인덱스
     }
   },
   mounted() {
@@ -137,18 +140,21 @@ export default {
         // 'SIGUN_NM' 키를 기준으로 가나다 순 정렬하여 totalResultArr에 저장
         jsonData = jsonData.sort((a, b) => a.sigunNM.localeCompare(b.sigunNM));
         this.totalResultArr = jsonData;
+
+        this.getData();
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
     },
-    getData(sigun) {
+    getData(sigun, idx) {
       if(this.totalResultArr != []) {
         this.resultFlag = true;
         this.resultArr = this.totalResultArr;
         this.resultLength = this.totalResultArr.length;
 
           if(sigun) {
+            this.selectedIndex = idx; // 클릭된 항목의 인덱스를 저장
             this.resultArr = [];
 
             // 지역별로 필터링하여 새로운 배열 생성
@@ -163,9 +169,16 @@ export default {
       }
     },
     getSigunList() {
-      // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
-      const sigunNMArr = [...new Set(this.totalResultArr.map(item => item.sigunNM))];
-      this.sigunNMArr = sigunNMArr;
+      this.menuExpand = !this.menuExpand;
+
+      if(this.menuExpand) {
+        // 'SIGUN_NM' 값을 중복 없이 추출하여 시군명 배열 생성
+        const sigunNMArr = [...new Set(this.totalResultArr.map(item => item.sigunNM))];
+        this.sigunNMArr = sigunNMArr;
+      } else {
+        this.sigunNMArr = [];
+      }
+
     },
     parseXML(xmlString) {
       const parser = new DOMParser();
@@ -218,7 +231,7 @@ export default {
   display: flex;
   align-items: center;
   margin-top: 20px;
-  padding: 7px;
+  padding: 7px 12px;
   border: 3px solid #2E9A47;
   border-radius: 24px;
   background-color: #fff;
@@ -241,12 +254,18 @@ export default {
 
 /* 검색 버튼 스타일 */
 .search-button {
-  width: 32px;
-  height: 32px;
+  width: 28px;
+  height: 28px;
   background-image: url("../assets/search_icon.png");
   background-repeat: no-repeat;
   background-color: inherit;
+  background-position: center;
+  background-size: contain;
   border: none;
+
+  &:hover {
+    background-color: inherit;
+  }
 }
 
 .list-container {
@@ -286,8 +305,14 @@ export default {
         overflow: scroll;
 
         li {
-        padding: 18px 25px;
-      }
+          padding: 18px 25px;
+          cursor: pointer;
+
+          &.selected {
+            color: #2E9A47;
+            font-weight: bold;
+          }
+        }
       } 
     }
   }
@@ -296,6 +321,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    cursor: pointer;
 
     span {
       display: inline-block;
@@ -309,7 +335,13 @@ export default {
       width: 16px;
       height: 16px;
       margin-right: 15px;
-      background-image: url("../assets/arrow-up-icon.png");
+
+      &.upArrow{
+        background-image: url("../assets/arrow-up-icon.png");
+      }
+      &.downArrow{
+        background-image: url("../assets/arrow-down-icon.png");
+      }
     }
   }
 }
@@ -423,17 +455,19 @@ export default {
     justify-content: space-between;
     border-bottom: 1px solid #999999;
     margin-bottom: 36px;
+    padding-bottom: 15px;
 
     .title {
       display: block;
-      padding: 20px;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: bold;
     }
     em {
-      width: 33px;
-      height: 33px;
+      width: 28px;
+      height: 28px;
       background-image: url("../assets/close-icon.png");
+      background-position: center;
+      background-size: contain;
     }
   }
 }
