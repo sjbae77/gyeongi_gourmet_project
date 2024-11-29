@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+// import { createRouter } from "vue-router";
 import store from "./store/index"; // Vuex Store 가져오기
 
 // 컴포넌트
@@ -13,6 +14,7 @@ import ReviewWrite from "./components/ReviewWrite.vue";
 
 const router = createRouter({
   history: createWebHistory(),
+  mode: 'hash', // history 대신 hash 사용
   routes: [ // 라우터 인스턴스 생성
     {
       path: "/gyeongi_gourmet_page", // 주소

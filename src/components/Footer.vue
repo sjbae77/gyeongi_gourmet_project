@@ -17,9 +17,6 @@ export default {
 
 <style lang="scss">
 .footer {
-  position: fixed;
-  bottom: 0;
-  left: 0;
   width: 100%;
   height: 100px;
   background-color: #1E3049;

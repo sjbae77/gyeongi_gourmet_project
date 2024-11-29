@@ -444,7 +444,7 @@ export default {
 
 .modal {
   width: 800px;
-  height: 70vh;
+  height: 80vh;
   background: white;
   padding: 25px;
   border-radius: 8px;

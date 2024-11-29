@@ -7,8 +7,8 @@
         <router-view />
       </div>
     </div>
+    <FooterLayout />
   </div>
-  <FooterLayout />
   <!-- <Main msg ="hello" /> -->
 </template>
 
@@ -52,17 +52,16 @@ a {
 
 #app {
   width: 100%;
-  height: 100%;
+  height: 100vh;
 }
 .container {
   width: 100%;
-  height: calc(100% - 180px); // 헤더, 푸터를 제외한 컨텐츠 영역
+  height: 100vh;
   padding-top: 80px;
 }
 .inner {
   padding: 0 140px;
-  height: 100%;
-  overflow: scroll;
+  // height: 100%;
 }
 .content-layout {
   width: 100%;
