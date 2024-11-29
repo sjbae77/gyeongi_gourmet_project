@@ -28,13 +28,25 @@
       </p>
     </section>
     <section class="sec2">
-      <p>
-        <em class="color-green">모범 음식점 선정기준은?</em><br />
-        <strong>위생 관리 수준 - </strong> 조리 시설, 식재료 보관, 청결 상태 등의 위생 관리가 철저해야 합니다.<br />
-        <strong>서비스 품질 - </strong> 친절한 고객 응대, 서비스의 일관성 등을 평가합니다.<br />
-        <strong>안전성 - </strong> 조리 과정에서의 안전 준수, 고객의 안전을 고려한 시설물 관리 등이 포함됩니다.<br />
-        <strong>기타 - </strong> 지속적인 품질 유지와 지역 사회 기여도, 친환경 경영 등도 일부 평가 항목에 포함될 수 있습니다.<br />
-      </p>
+      <span class="color-green title">모범 음식점 선정기준</span>
+      <div class="cont-wrap">
+        <div class="cont">
+          <span class="color-green">위생 관리 수준</span>
+          <p>조리 시설, 식재료 보관, 청결 상태 등의 위생 관리가 철저해야 합니다.</p>
+        </div>
+        <div class="cont">
+          <span class="color-green">서비스 품질</span>
+          <p>친절한 고객 응대, 서비스의 일관성 등을 평가합니다.</p>
+        </div>
+        <div class="cont">
+          <span class="color-green">안전성</span>
+          <p>조리 과정에서의 안전 준수, 고객의 안전을 고려한 시설물 관리 등이 포함됩니다.</p>
+        </div>
+        <div class="cont">
+          <span class="color-green">기타</span>
+          <p>지속적인 품질 유지와 지역 사회 기여도, 친환경 경영 등도 일부 평가 항목에 포함될 수 있습니다.</p>
+        </div>
+      </div>
     </section>  
   </div>
 </template>
@@ -71,6 +83,7 @@ strong {
       margin-top: 32px;
       font-size: 55px;
       font-weight: bold;
+      line-height: 60px;
     }
 
     }
@@ -82,23 +95,14 @@ strong {
 }
 
 section {
+  font-size: 20px;
+}
+
+.sec1 {
   display: flex;
   align-items: center;
   gap: 50px;
   margin-bottom: 120px;
-  font-size: 20px;
-
-  p {
-    line-height: 30px;
-
-    em {
-      display: block;
-      font-size: 38px;
-    }
-  }
-}
-
-.sec1 {
   padding-top: 50px;
 
   .img-wrap {
@@ -111,6 +115,46 @@ section {
       height: 100%;
       border-radius: 35px;
       box-shadow: 0 -5px 20px rgba(#000, 0.2);
+    }
+  }
+
+  p {
+    line-height: 30px;
+
+    em {
+      display: block;
+      font-size: 38px;
+    }
+  }
+}
+.sec2 {
+  .cont-wrap {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+
+    .cont {
+      width: calc(50% - 70px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 30px;
+      border-radius: 25px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      background-color: #fff;
+
+      span {
+        width: 30%;
+        font-size: 18px;
+        text-align: center;
+      }
+      p {
+        width: 70%;
+        word-break: keep-all;
+        font-size: 16px;
+        line-height: 22px;
+      }
     }
   }
 }

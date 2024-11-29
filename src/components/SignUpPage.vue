@@ -26,8 +26,8 @@ import { signUpEmail } from "../firebase/index.js";
     },
     methods: {
       signUp() {
-        console.log('Email : ' + this.email);
-        console.log('Password : ' + this.password);
+        // console.log('Email : ' + this.email);
+        // console.log('Password : ' + this.password);
 
         if (this.email == "") {
           alert("이메일을 입력해주세요.");

@@ -31,7 +31,7 @@
           </div>
         </div>
       </div>
-      <div class="cont-wrap">
+      <div class="cont-wrap" ref="contWrap">
         <div class="title-wrap">
           <span class="title color-green">검색 결과</span>
           <span class="title color-green">총 {{ resultLength }}건</span>
@@ -111,10 +111,19 @@ export default {
     this.getTotalData();
   },
   methods: {
+    scrollToTop() {
+      // ref를 통해 cont-wrap에 접근하여 스크롤 위치를 변경
+      const container = this.$refs.contWrap;
+      if (container) {
+        container.scrollTop = 0; // 스크롤 위치를 최상단으로 설정
+      }
+    },
     search() {
       const inputValue = document.getElementById('searchInput').value;
       if(inputValue != null && inputValue != "") {
         this.getSearchData(inputValue);
+      } else {
+        this.resultArr = this.getTotalData();
       }
     },
     getSearchData(keyword) {
@@ -131,6 +140,7 @@ export default {
 
       this.resultArr = searchResultArr;
       this.resultLength = searchResultArr.length;
+      this.scrollToTop();
     },
     getTotalData() {
       axios.get('https://openapi.gg.go.kr/ParagonRestaurant?KEY=c526a4e53c9d41e6956418615a2f9939&plndex=1&pSize=1000')
@@ -166,6 +176,8 @@ export default {
             })
             this.resultArr = this.resultArr[0];
             this.resultLength = this.resultArr.length;
+
+            this.scrollToTop();
           }
       }
     },
@@ -282,6 +294,19 @@ export default {
   .cont-wrap {
     width: 76%;
     height: 100%;
+
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    overflow-y: scroll;
+
+    .title-wrap {
+      width:100%;
+      height: 23px;
+      display: flex; 
+      justify-content: space-between;
+    }
   }
 
   .title-wrap {
@@ -414,20 +439,7 @@ export default {
     }
   }
 }
-.cont-wrap {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-  overflow-y: scroll;
 
-  .title-wrap {
-    width:100%;
-    height: 23px;
-    display: flex; 
-    justify-content: space-between;
-  }
-}
 
 /* 모달 스타일 */
 .modal-overlay {
@@ -444,7 +456,7 @@ export default {
 
 .modal {
   width: 800px;
-  height: 80vh;
+  height: 70vh;
   background: white;
   padding: 25px;
   border-radius: 8px;

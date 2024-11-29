@@ -7,8 +7,8 @@
         <router-view />
       </div>
     </div>
-    <FooterLayout />
   </div>
+  <FooterLayout />
   <!-- <Main msg ="hello" /> -->
 </template>
 
@@ -41,7 +41,7 @@ body {
 .color-green {
   color: #2E9A47;
   font-weight: bold;
-  font-size: 22px;
+  font-size: 24px;
 }
 
 a {
@@ -52,16 +52,17 @@ a {
 
 #app {
   width: 100%;
-  height: 100vh;
+  height: 100%;
 }
 .container {
   width: 100%;
-  height: 100vh;
+  height: calc(100% - 180px); // 헤더, 푸터를 제외한 컨텐츠 영역
   padding-top: 80px;
 }
 .inner {
   padding: 0 140px;
-  // height: 100%;
+  height: 100%;
+  overflow: scroll;
 }
 .content-layout {
   width: 100%;
