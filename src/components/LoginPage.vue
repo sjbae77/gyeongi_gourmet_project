@@ -44,7 +44,7 @@ export default {
       loginEmail(this.email, this.password).then((result) => {
         this.$store.commit("setUser", result.user); // Vuex에 사용자 저장
         // console.log("User logged in:", result.user);
-        this.$router.replace('/gyeongi_gourmet_page');
+        this.$router.replace('/');
         // console.log("로그인")
         // console.log(result);
         alert("로그인 완료되었습니다.\r\n" + result.user.email);

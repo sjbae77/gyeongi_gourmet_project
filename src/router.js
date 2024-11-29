@@ -1,5 +1,4 @@
-import { createWebHistory, createRouter } from "vue-router";
-// import { createRouter } from "vue-router";
+import { createWebHashHistory, createRouter } from "vue-router";
 import store from "./store/index"; // Vuex Store 가져오기
 
 // 컴포넌트
@@ -13,11 +12,10 @@ import Review from "./components/ReviewCont.vue";
 import ReviewWrite from "./components/ReviewWrite.vue";
 
 const router = createRouter({
-  history: createWebHistory(),
-  mode: 'hash', // history 대신 hash 사용
+  history: createWebHashHistory("/gyeongi_gourmet_page"), // Hash 모드 사용
   routes: [ // 라우터 인스턴스 생성
     {
-      path: "/gyeongi_gourmet_page", // 주소
+      path: "/", // 주소
       name: "Main",
       component: MainPage, // <router-view>에서 보여질 컴포넌트
     },
@@ -56,6 +54,11 @@ const router = createRouter({
       name: "ReviewWrite",
       component: ReviewWrite
     },
+    { // 존재하지 않는 경로로 접근할 경우 메인 컴포넌트 출력
+      path: '/:pathMatch(.*)*',
+      name: 'NotFound',
+      component: MainPage,
+    }
   ]
 });
 

@@ -68,6 +68,7 @@ strong {
   font-weight: bold;
 }
 .banner {
+  margin-bottom: 120px;
   padding: 70px 38px 98px 64px;
   border-radius: 40px;
   background-image: linear-gradient(to left, rgba(#00BF71, 0.2), #E5FFEB);
@@ -95,6 +96,7 @@ strong {
 }
 
 section {
+  margin-bottom: 120px;
   font-size: 20px;
 }
 
@@ -102,8 +104,6 @@ section {
   display: flex;
   align-items: center;
   gap: 50px;
-  margin-bottom: 120px;
-  padding-top: 50px;
 
   .img-wrap {
     width: 320px;
@@ -129,7 +129,7 @@ section {
 }
 .sec2 {
   .cont-wrap {
-    margin-top: 30px;
+    margin-top: 40px;
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
