@@ -1,7 +1,7 @@
 <template>
   <div class="detail-wrap result-cont">
     <div class="cont" >
-      <div class="info-cont">
+      <div class="info-cont detail">
         <div class="img-wrap">
           <img src="../assets/sample_img_1.png" alt="샘플 이미지 1">
         </div>
@@ -98,7 +98,15 @@ export default {
 
 <style lang="scss">
 .detail-wrap {
-  // padding: 32px 60px;
+
+  .info-cont.detail {
+    margin-bottom: 0 !important;
+  }
+
+  &.result-cont {
+    height: auto;
+    margin-bottom: 20px;
+  }
 
   .cont{
     padding: 0;

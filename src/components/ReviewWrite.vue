@@ -1,16 +1,13 @@
 <template>
-  <div class="review-cont" >
-    <form @submit.prevent="handleSubmit">
-      <div class="user-info">
-        <span>{{ currentUser.email }}</span>
-      </div>
-      <div class="text-contet">
-        <!-- <label for="reviewText">내용: </label> -->
-        <textarea name="reviewText" id="writeContent" v-model="writeContent" required></textarea>
-      </div>
-      <button type="submit">저장</button>
-    </form>
-  </div>
+  <form @submit.prevent="handleSubmit">
+    <div class="user-info">
+      <span>{{ currentUser.email }}</span>
+    </div>
+    <div class="text-contet">
+      <textarea name="reviewText" id="writeContent" v-model="writeContent" required></textarea>
+    </div>
+    <button type="submit">저장</button>
+  </form>
 </template>
 
 <script>
@@ -58,41 +55,29 @@ export default {
 </script>
 
 <style lang="scss">
-.review-wrap {
-  .title-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid #999;
-    padding: 15px;
-  }
-}
 .review-cont-wrap {
-  margin: 20px 0 40px;
+  form {
+    width: 100%;
+    height: 100%;
+  }
 
-  .review-cont {
-    margin-bottom: 16px;
-    padding: 15px 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(#000, 0.1);
+  .user-info {
+    text-align: left;
+  }
+  .text-contet {
+    width: 100%;
+    height: calc(100% - 118px);
+    margin-top: 20px;
 
-    .user-info {
-      text-align: left;
-    }
-    .text-contet {
+    textarea {
       width: 100%;
-      margin-top: 20px;
-
-      textarea {
-        width: 100%;
-        height: 100px;
-        box-sizing: border-box;
-      }
+      height: 100%;
+      box-sizing: border-box;
     }
+  }
 
-    button {
-      margin-top: 20px;
-    }
+  button {
+    margin-top: 20px;
   }
 }
 </style>

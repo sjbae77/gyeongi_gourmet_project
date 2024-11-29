@@ -1,16 +1,16 @@
 <template>
 <header class="header">
   <div class="header-inner">
-    <h1><router-link to="/">Gourmet Site</router-link></h1>
+    <h1><router-link to="/gyeongi_gourmet_page">Gourmet Site</router-link></h1>
     <nav class="nav">
       <ul class="menu-wrap">
-        <li class="active"><router-link to="/">메인</router-link></li>
+        <li class="active"><router-link to="/gyeongi_gourmet_page">메인</router-link></li>
         <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
         <!-- <li><router-link to="/Location">지도</router-link></li> -->
       </ul>
       <ul v-if="isAuthenticated" class="login-wrap">
         <li><router-link to="" class="color-green">{{ currentUser.email }} 님</router-link></li>
-        <li><router-link to="/" @click="logout">로그아웃</router-link></li>
+        <li><router-link to="/gyeongi_gourmet_page" @click="logout">로그아웃</router-link></li>
       </ul>
       <ul v-else class="login-wrap">
         <li><router-link to="/Login" class="color-green">로그인</router-link></li>

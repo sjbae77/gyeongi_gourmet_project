@@ -2,15 +2,9 @@
   <HeaderLayout />
   <div class="container">
     <div class="inner">
-      <!-- <MainPage />
-      <RestaurantList />
-      <Location /> -->
-      <!-- <Login /> -->
       <!-- 변경될 페이지 보여질 공간 -->
       <div class="content-layout">
-        <!-- <div class="page-cont"> -->
-          <router-view />
-        <!-- </div> -->
+        <router-view />
       </div>
     </div>
   </div>

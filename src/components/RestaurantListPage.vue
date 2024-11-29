@@ -16,14 +16,14 @@
           <div class="sec">
             <div class="wrap">
               <span @click="getData()">전체</span>
-              <em class="upArrow"></em>
+              <em class="downArrow"></em>
             </div>
           </div>
           <div class="sec">
             <div class="wrap">
               <span @click="getSigunList()">경기</span>
-              <em v-if="menuExpand" class="downArrow"></em>
-              <em v-else class="upArrow"></em>
+              <em v-if="menuExpand" class="upArrow"></em>
+              <em v-else class="downArrow"></em>
             </div>
             <ul v-if="menuExpand">
               <li v-for="(item, idx) in sigunNMArr" :key="idx" @click="getData(item,idx)" :class="{ selected: selectedIndex === idx }">{{ item }}</li>
@@ -73,9 +73,10 @@
         <span class="title">음식점 상세 정보</span>
         <em @click="closeModal()" class="btn-close"></em>
       </div>
-      <DetailModal :tag1="clickItem.bizcondNM" :tag2="clickItem.mainMenuNM" :title="clickItem.biszestblNM" :addr="clickItem.refineRoadnmAddr" :tel="clickItem.telNo"/>
-      <ReviewCont :restaurant="clickItem.biszestblNM" />
-      
+      <div class="modal-contents">
+        <DetailModal :tag1="clickItem.bizcondNM" :tag2="clickItem.mainMenuNM" :title="clickItem.biszestblNM" :addr="clickItem.refineRoadnmAddr" :tel="clickItem.telNo"/>
+        <ReviewCont :restaurant="clickItem.biszestblNM" />
+      </div>
     </div>
   </div>
 </template>
@@ -443,28 +444,34 @@ export default {
 
 .modal {
   width: 800px;
+  height: 70vh;
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
+
+  .modal-contents {
+    width: 100%;
+    height: calc(100% - 61px);
+  }
 
   .title-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #999999;
-    margin-bottom: 36px;
+    margin-bottom: 20px;
     padding-bottom: 15px;
 
     .title {
       display: block;
-      font-size: 28px;
+      font-size: 25px;
       font-weight: bold;
     }
     em {
-      width: 28px;
-      height: 28px;
+      width: 25px;
+      height: 25px;
       background-image: url("../assets/close-icon.png");
       background-position: center;
       background-size: contain;

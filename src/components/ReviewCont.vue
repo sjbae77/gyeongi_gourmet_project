@@ -18,7 +18,7 @@
         </p>
       </div>
     </div>
-    <div v-else class="review-cont-wrap">
+    <div v-else class="review-cont-wrap" :class="{ writeHeight: showReviewWrite === true }">
       <ReviewWrite :restaurantName="restaurant" @writeMode="updateReview" />
     </div>
     <button v-if="!showReviewWrite" @click="modeChange">리뷰 등록</button>
@@ -80,19 +80,28 @@ export default {
 
 <style lang="scss">
 .review-wrap {
+  width: 100%;
+  height: calc(100% - 257px);
+  position: relative;
+
   .title-wrap {
     display: flex;
     align-items: center;
     justify-content: space-between;
     border-bottom: 1px solid #999;
-    padding: 15px;
+    padding: 15px 0;
   }
 }
 .review-cont-wrap {
-  margin: 20px 0 40px;
   padding: 10px;
-  height: 300px;
+  height: calc(100% - 157px);
   overflow-y: scroll;
+
+  &.writeHeight {
+    height: calc(100% - 76px);
+    padding: 0;
+    overflow: hidden;
+  }
 
   .review-cont {
     margin-bottom: 16px;

@@ -11,58 +11,50 @@ import Detail from "./components/RestaurantDetail.vue";
 import Review from "./components/ReviewCont.vue";
 import ReviewWrite from "./components/ReviewWrite.vue";
 
-// 라우터 인스턴스 생성
-const routes = [
-  {
-    path: "/", // 주소
-    name: "Main",
-    component: MainPage, // <router-view>에서 보여질 컴포넌트
-  },
-  {
-    path: "/RestaurantList", // 주소
-    name: "RestaurantList",
-    component: RestaurantListPage, // <router-view>에서 보여질 컴포넌트
-  },
-  {
-    path: "/Location", // 주소
-    name: "Location",
-    component: LocationPage, // <router-view>에서 보여질 컴포넌트
-  },
-  {
-    path: "/Login", // 주소
-    name: "Login",
-    component: LoginPage, // <router-view>에서 보여질 컴포넌트
-  },
-  {
-    path: "/SignUp", // 주소
-    name: "SignUp",
-    component: SignUpPage, // <router-view>에서 보여질 컴포넌트
-  },
-  {
-    path: "/Detail",
-    name: "Detail",
-    component: Detail
-  },
-  {
-    path: "/Review",
-    name: "Review",
-    component: Review
-  },
-  {
-    path: "/ReviewWrite",
-    name: "ReviewWrite",
-    component: ReviewWrite
-  },
-  // {
-  //   path: "/Detail/:id",   // 동적 라우트 매칭
-  //   name: "DetailView",
-  //   component: DetailView
-  // }
-];
-
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  routes: [ // 라우터 인스턴스 생성
+    {
+      path: "/gyeongi_gourmet_page", // 주소
+      name: "Main",
+      component: MainPage, // <router-view>에서 보여질 컴포넌트
+    },
+    {
+      path: "/RestaurantList", // 주소
+      name: "RestaurantList",
+      component: RestaurantListPage, // <router-view>에서 보여질 컴포넌트
+    },
+    {
+      path: "/Location", // 주소
+      name: "Location",
+      component: LocationPage, // <router-view>에서 보여질 컴포넌트
+    },
+    {
+      path: "/Login", // 주소
+      name: "Login",
+      component: LoginPage, // <router-view>에서 보여질 컴포넌트
+    },
+    {
+      path: "/SignUp", // 주소
+      name: "SignUp",
+      component: SignUpPage, // <router-view>에서 보여질 컴포넌트
+    },
+    {
+      path: "/Detail",
+      name: "Detail",
+      component: Detail
+    },
+    {
+      path: "/Review",
+      name: "Review",
+      component: Review
+    },
+    {
+      path: "/ReviewWrite",
+      name: "ReviewWrite",
+      component: ReviewWrite
+    },
+  ]
 });
 
 router.beforeEach((to, from, next) => {
