@@ -6,10 +6,9 @@
       <ul class="menu-wrap">
         <li class="active"><router-link to="/gyeongi_gourmet_page">메인</router-link></li>
         <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
-        <!-- <li><router-link to="/Location">지도</router-link></li> -->
       </ul>
-      <ul v-if="isAuthenticated" class="login-wrap">
-        <li><router-link to="" class="color-green">{{ currentUser.email }} 님</router-link></li>
+      <ul v-if="isAuthenticated" class="login-wrap login">
+        <li><router-link to="" class="color-green">{{ currentUser.email }} <em>님</em></router-link></li>
         <li><router-link to="/gyeongi_gourmet_page" @click="logout">로그아웃</router-link></li>
       </ul>
       <ul v-else class="login-wrap">
@@ -28,7 +27,6 @@ export default {
   name: 'HeaderLayout',
   data() {
     return {
-      // loginFlag: false,
     }
   },
   props: {
@@ -91,19 +89,41 @@ export default {
       }
     }
 
-    .login-wrap li {
-      a {
-        font-size: 18px;
+    .login-wrap {
+      li {
+        a {
+          font-size: 18px;
+        }
+
+        &:last-child a {
+          padding: 8px 16px;
+          color: #fff;
+          font-size: 16px;
+          border-radius: 5px;
+          background-color: #2E9A47;
+        }
       }
 
-      &:last-child a {
-        padding: 8px 16px;
-        color: #fff;
-        font-size: 16px;
-        border-radius: 5px;
-        background-color: #2E9A47;
+      &.login {
+        li {
+          a {
+            padding: 8px 16px;
+            background-color: #E5FFEB;
+            border-radius: 5px;
+            border: 1px solid #2E9A47;
+          }
+
+          &:last-child a {
+            padding: 0;
+            color: #666;
+            font-size: 16px;
+            border-radius: 0;
+            border: none;
+            background-color: inherit;
+          }
+        }
       }
-    }
+    } 
   }
 }
 </style>
