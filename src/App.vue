@@ -27,7 +27,7 @@ export default {
     // MainPage,
     // Location,
     // RestaurantList,
-  }
+  },
 }
 </script>
 
