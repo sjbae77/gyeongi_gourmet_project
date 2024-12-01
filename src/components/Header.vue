@@ -4,8 +4,8 @@
     <h1><router-link to="/">Gourmet Site</router-link></h1>
     <nav class="nav">
       <ul class="menu-wrap">
-        <li class="active"><router-link to="/">메인</router-link></li>
-        <li><router-link to="/RestaurantList">음식점 목록</router-link></li>
+        <li @click="setActive('item1')" :class="{ active: activeItem === 'item1' }"><router-link to="/">메인</router-link></li>
+        <li @click="setActive('item2')" :class="{ active: activeItem === 'item2' }"><router-link to="/RestaurantList">음식점 목록</router-link></li>
       </ul>
       <ul v-if="isAuthenticated" class="login-wrap login">
         <li><router-link to="" class="color-green">{{ currentUser.email }} <em>님</em></router-link></li>
@@ -27,6 +27,7 @@ export default {
   name: 'HeaderLayout',
   data() {
     return {
+      activeItem: 'item1', // 현재 active 상태의 ID 저장
     }
   },
   props: {
@@ -36,6 +37,9 @@ export default {
   },
   methods: {
     ...mapActions(["logout"]), // Vuex 액션 가져오기
+    setActive(itemId) {
+      this.activeItem = itemId; // 클릭된 항목의 ID 저장
+    },
   },
 }
 </script>
